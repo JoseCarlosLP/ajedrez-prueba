@@ -619,8 +619,8 @@ while True:
 		gblancas = pygame.image.load('gblancas.png')
 		visor.blit(gblancas,(0,0))
 	elif reyblanco.casx > 8:
-		gblancas = pygame.image.load('gblancas.png')
-		visor.blit(gblancas,(0,0))
+		gnegras = pygame.image.load('gnegras.png')
+		visor.blit(gnegras,(0,0))
 
 	pygame.display.update()
 	if len(cliked) > 1:
