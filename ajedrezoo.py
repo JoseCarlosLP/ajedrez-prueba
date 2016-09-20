@@ -21,6 +21,78 @@ ocupadas=[
 [0,0,0,0,0,0,0,0,0]
 ]
 
+def ocupasillab(pieza):
+	caspada = pieza.casillaocupada()
+	ocupadas[caspada[0]][caspada[1]] = 1
+	
+def ocupasillan(pieza):
+	caspada = pieza.casillaocupada()
+	ocupadas[caspada[0]][caspada[1]] = 2
+	
+def desocupasilla(pieza):
+	caspada = pieza.casillaocupada()
+	ocupadas[caspada[0]][caspada[1]] = 0
+
+def ud7(num):
+	if num == 1:
+		return 2
+	if num == 2:
+		return 7
+
+def comepieza(pieza):
+	desocupasilla(pieza)
+	pieza.cambiasilla(9,9)
+
+def muevepieza(pieza,ncasx,ncasy,color):
+	desocupasilla(pieza)
+	pieza.cambiasilla(ncasx,ncasy)
+	if color == "blancas":
+		ocupasillab(pieza)
+	if color== "negras":
+		ocupasillan(pieza)
+
+def	sacapiezadelaposicion(casillax,casillay):
+	for b in range(1,9):
+		if casillax == peonegro[b].casx and casillay == peonegro[b].casy:
+			return peonegro[b]
+		elif casillax == peonblanco[b].casx and casillay == peonblanco[b].casy:
+			return peonblanco[b]
+	for c in range(1,3):
+		if casillax == caballonegro[c].casx and casillay == caballonegro[c].casy:
+			return caballonegro[c]
+		elif casillax == caballoblanco[c].casx and casillay == caballoblanco[c].casy:
+			return caballoblanco[c]
+		elif casillax == torrenegra[c].casx and casillay == torrenegra[c].casy:
+			return torrenegra[c]
+		elif casillax == torreblanca[c].casx and casillay == torreblanca[c].casy:
+			return torreblanca[c]
+		elif casillax == alfilnegro[c].casx and casillay == alfilnegro[c].casy:
+			return alfilnegro[c]
+		elif casillax == alfilblanco[c].casx and casillay == alfilblanco[c].casy:
+			return alfilblanco[c]
+	if casillax == reynegro.casx and casillay == reynegro.casy:
+		return reynegro
+	elif casillax == reyblanco.casx and casillay == reyblanco.casy:
+		return reyblanco
+	elif casillax == reinanegra.casx and casillay == reinanegra.casy:
+		return reinanegra
+	elif casillax == reinablanca.casx and casillay == reinablanca.casy:
+		return reinablanca
+		
+def sacasillax(posraton):
+	i = 0
+	while i < 9:
+		if casilla[i] < posraton[0] <= casilla[i+1]:
+			return i
+		i+=1
+
+def sacasillay(posraton):
+	i = 0
+	while i < 9:
+		if casilla[i] < posraton[1] <= casilla[i+1]:
+			return i
+		i+=1
+
 class metapieza():
 	def __init__(self,x,y):
 		self.posx=casilla[x]
@@ -28,10 +100,7 @@ class metapieza():
 		self.casx=x
 		self.casy=y
 	def cambiasilla(self,x,y):
-		self.posx=casilla[x]
-		self.posy=casilla[y]
-		self.casx=x
-		self.casy=y
+		self.__init__(x,y)
 	def casillaocupada(self):
 		return self.casy,self.casx
 	def movlineal(self,ccomer,movmax=8):
@@ -149,9 +218,9 @@ class metaballo():
 			if ocupadas[self.casy+2][self.casx+1] == 0:
 				visor.blit(puntoazul,(casilla[self.casx+1],casilla[self.casy+2]))
 				casposibles[2]=(self.casx+1,self.casy+2)
-			elif ocupadas[self.casy-2][self.casx-1] == ccomer:
-				visor.blit(puntoazul,(casilla[self.casx-1],casilla[self.casy-2]))
-				casposibles[1]=(self.casx-1,self.casy-2)
+			elif ocupadas[self.casy+2][self.casx+1] == ccomer:
+				visor.blit(puntoazul,(casilla[self.casx+1],casilla[self.casy+2]))
+				casposibles[1]=(self.casx+1,self.casy+2)
 		if 0 < self.casy+2 <= 8 and 0 < self.casx-1 <= 8:
 			if ocupadas[self.casy+2][self.casx-1] == 0:
 				visor.blit(puntoazul,(casilla[self.casx-1],casilla[self.casy+2]))
@@ -326,79 +395,6 @@ class creareinablanca(metapieza):
 		posimovi[0]=metapieza.movlineal(self,2)
 		posimovi[1]=metapieza.movdiagonal(self,2)
 		return posimovi
-
-def sacasillax(posraton):
-	i = 0
-	while i < 9:
-		if casilla[i] < posraton[0] <= casilla[i+1]:
-			return i
-		i+=1
-
-def sacasillay(posraton):
-	i = 0
-	while i < 9:
-		if casilla[i] < posraton[1] <= casilla[i+1]:
-			return i
-		i+=1
-
-def ud7(num):
-	if num == 1:
-		return 2
-	if num == 2:
-		return 7
-
-def ocupasillab(pieza):
-	caspada = pieza.casillaocupada()
-	ocupadas[caspada[0]][caspada[1]] = 1
-	
-def ocupasillan(pieza):
-	caspada = pieza.casillaocupada()
-	ocupadas[caspada[0]][caspada[1]] = 2
-	
-def desocupasilla(pieza):
-	caspada = pieza.casillaocupada()
-	ocupadas[caspada[0]][caspada[1]] = 0
-
-def comepieza(pieza):
-	desocupasilla(pieza)
-	pieza.cambiasilla(9,9)
-
-def muevepieza(pieza,ncasx,ncasy,color):
-	desocupasilla(pieza)
-	pieza.cambiasilla(ncasx,ncasy)
-	if color == "blancas":
-		ocupasillab(pieza)
-	if color== "negras":
-		ocupasillan(pieza)
-
-def	sacapiezadelaposicion(casillax,casillay):
-	for b in range(1,9):
-		if casillax == peonegro[b].casx and casillay == peonegro[b].casy:
-			return peonegro[b]
-		elif casillax == peonblanco[b].casx and casillay == peonblanco[b].casy:
-			return peonblanco[b]
-	for c in range(1,3):
-		if casillax == caballonegro[c].casx and casillay == caballonegro[c].casy:
-			return caballonegro[c]
-		elif casillax == caballoblanco[c].casx and casillay == caballoblanco[c].casy:
-			return caballoblanco[c]
-		elif casillax == torrenegra[c].casx and casillay == torrenegra[c].casy:
-			return torrenegra[c]
-		elif casillax == torreblanca[c].casx and casillay == torreblanca[c].casy:
-			return torreblanca[c]
-		elif casillax == alfilnegro[c].casx and casillay == alfilnegro[c].casy:
-			return alfilnegro[c]
-		elif casillax == alfilblanco[c].casx and casillay == alfilblanco[c].casy:
-			return alfilblanco[c]
-	if casillax == reynegro.casx and casillay == reynegro.casy:
-		return reynegro
-	elif casillax == reyblanco.casx and casillay == reyblanco.casy:
-		return reyblanco
-	elif casillax == reinanegra.casx and casillay == reinanegra.casy:
-		return reinanegra
-	elif casillax == reinablanca.casx and casillay == reinablanca.casy:
-		return reinablanca
-	
 			
 puntoazul = pygame.image.load('puntoazul.png')
 
