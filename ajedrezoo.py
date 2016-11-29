@@ -262,8 +262,6 @@ class metaballo():
 				casposibles[8]=(self.casx+2,self.casy-1)
 		return casposibles
 
-largo = 0
-
 class metarey():
 	def enroke(self,color):
 		casposibles=[None] * 3
@@ -272,6 +270,7 @@ class metarey():
 			if (sacapiezadelaposicion(self.casx+3,self.casy) == torreblanca[2] or sacapiezadelaposicion(self.casx+3,self.casy) == torrenegra[2]) and ocupadas[self.casy][self.casx+2] == 0 and ocupadas[self.casy][self.casx+1] == 0:
 				visor.blit(puntoazul,(casilla[self.casx+2],casilla[self.casy]))
 				casposibles[1] = (self.casx+2,self.casy) 
+				largo = 0
 			if (sacapiezadelaposicion(self.casx-4,self.casy) == torreblanca[1] or sacapiezadelaposicion(self.casx-4,self.casy) == torrenegra[1]) and ocupadas[self.casy][self.casx-3] == 0 and ocupadas[self.casy][self.casx-2] == 0 and ocupadas[self.casy][self.casx-1] == 0:
 				visor.blit(puntoazul,(casilla[self.casx-2],casilla[self.casy]))
 				casposibles[2] = (self.casx-2,self.casy)
