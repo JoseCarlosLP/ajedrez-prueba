@@ -76,18 +76,14 @@ def	sacapiezadelaposicion(casillax,casillay):
 		return reinablanca
 		
 def sacasillax(posraton):
-	i = 0
-	while i < 9:
+	for i in range(9):
 		if casilla[i] < posraton[0] <= casilla[i+1]:
 			return i
-		i+=1
 
 def sacasillay(posraton):
-	i = 0
-	while i < 9:
+	for i in range(9):
 		if casilla[i] < posraton[1] <= casilla[i+1]:
 			return i
-		i+=1
 
 class metapieza():
 	def __init__(self,x,y):
@@ -581,7 +577,6 @@ while True:
 				if ocupadas[nuevacasillay][nuevacasillax] != 0:
 					comepieza(sacapiezadelaposicion(nuevacasillax,nuevacasillay))
 				if (nuevacasillax,nuevacasillay) in posimovr[2]:
-					print largo
 					if largo == 0:
 						muevepieza(torrenegra[2],6,1,2)
 					else:
@@ -595,7 +590,6 @@ while True:
 				if ocupadas[nuevacasillay][nuevacasillax] != 0:
 					comepieza(sacapiezadelaposicion(nuevacasillax,nuevacasillay))
 				if (nuevacasillax,nuevacasillay) in posimovr[2]:
-					print largo
 					if largo == 0:
 						muevepieza(torreblanca[2],6,8,1)
 					else:
