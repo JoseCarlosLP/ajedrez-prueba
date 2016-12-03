@@ -248,11 +248,11 @@ class metarey():
 		casposibles=[None] * 3
 		global largo
 		if self.casx == 5:
-			if (sacapiezadelaposicion(self.casx+3,self.casy) == torreblanca[2] or sacapiezadelaposicion(self.casx+3,self.casy) == torrenegra[2]) and ocupadas[self.casy][self.casx+2] == 0 and ocupadas[self.casy][self.casx+1] == 0:
+			if ocupadas[self.casy][self.casx+2] == 0 and ocupadas[self.casy][self.casx+1] == 0:
 				visor.blit(puntoazul,(casilla[self.casx+2],casilla[self.casy]))
 				casposibles[1] = (self.casx+2,self.casy) 
 				largo = 0
-			if (sacapiezadelaposicion(self.casx-4,self.casy) == torreblanca[1] or sacapiezadelaposicion(self.casx-4,self.casy) == torrenegra[1]) and ocupadas[self.casy][self.casx-3] == 0 and ocupadas[self.casy][self.casx-2] == 0 and ocupadas[self.casy][self.casx-1] == 0:
+			if ocupadas[self.casy][self.casx-3] == 0 and ocupadas[self.casy][self.casx-2] == 0 and ocupadas[self.casy][self.casx-1] == 0:
 				visor.blit(puntoazul,(casilla[self.casx-2],casilla[self.casy]))
 				casposibles[2] = (self.casx-2,self.casy)
 				largo = 1 
@@ -356,7 +356,8 @@ class creareynegro(metapieza,metarey):
 		posimovr=[None] * 3
 		posimovr[0]=metapieza.movlineal(self,1,1)
 		posimovr[1]=metapieza.movdiagonal(self,1,1)
-		posimovr[2]=metarey.enroke(self,2)
+		if sacapiezadelaposicion(self.casx-4,self.casy) == torrenegra[1] or sacapiezadelaposicion(self.casx-4,self.casy) == torrenegra[2]:
+			posimovr[2]=metarey.enroke(self,2)
 		return posimovr
 
 class creareyblanco(metapieza,metarey):
@@ -367,7 +368,8 @@ class creareyblanco(metapieza,metarey):
 		posimovr=[None] * 3
 		posimovr[0]=metapieza.movlineal(self,2,1)
 		posimovr[1]=metapieza.movdiagonal(self,2,1)
-		posimovr[2]=metarey.enroke(self,1)
+		if sacapiezadelaposicion(self.casx-4,self.casy) == torreblanca[1] or sacapiezadelaposicion(self.casx-4,self.casy) == torreblanca[2]:
+			posimovr[2]=metarey.enroke(self,1)
 		return posimovr
 
 class creareinanegra(metapieza):
