@@ -124,6 +124,16 @@ class metapieza():
 					ordr = 0
 				else:
 					ordr = 0
+			'''
+				if 0 < self.casy <= 8 and 0 < self.casx+casi <= 8 and ordr == 1:		
+				if ocupadas[self.casy][self.casx+casi] == cpropio:
+					ordr = 0
+				else:
+					visor.blit(puntoazul,(casilla[self.casx+casi],casilla[self.casy]))
+					casposibles[movmax+casi]=(self.casx+casi,self.casy)
+					if ocupadas[self.casy][self.casx+casi] == ccomer:
+						ordr = 0
+			'''					
 			if 0 < self.casy-casi <= 8 and 0 < self.casx <= 8 and vrdr == 1:
 				if ocupadas[self.casy-casi][self.casx] == 0:
 					visor.blit(puntoazul,(casilla[self.casx],casilla[self.casy-casi]))
@@ -200,60 +210,35 @@ class metaballo():
 	def movcaballo(self,ccomer):
 		casposibles=[None] * 10
 		if 0 < self.casy-2 <= 8 and 0 < self.casx-1 <= 8:
-			if ocupadas[self.casy-2][self.casx-1] == 0:
-				visor.blit(puntoazul,(casilla[self.casx-1],casilla[self.casy-2]))
-				casposibles[1]=(self.casx-1,self.casy-2)
-			elif ocupadas[self.casy-2][self.casx-1] == ccomer:
+			if ocupadas[self.casy-2][self.casx-1] == 0 or ocupadas[self.casy-2][self.casx-1] == ccomer:
 				visor.blit(puntoazul,(casilla[self.casx-1],casilla[self.casy-2]))
 				casposibles[1]=(self.casx-1,self.casy-2)
 		if 0 < self.casy+2 <= 8 and 0 < self.casx+1 <= 8:
-			if ocupadas[self.casy+2][self.casx+1] == 0:
-				visor.blit(puntoazul,(casilla[self.casx+1],casilla[self.casy+2]))
-				casposibles[2]=(self.casx+1,self.casy+2)
-			elif ocupadas[self.casy+2][self.casx+1] == ccomer:
+			if ocupadas[self.casy+2][self.casx+1] == 0 or ocupadas[self.casy+2][self.casx+1] == ccomer:
 				visor.blit(puntoazul,(casilla[self.casx+1],casilla[self.casy+2]))
 				casposibles[2]=(self.casx+1,self.casy+2)
 		if 0 < self.casy+2 <= 8 and 0 < self.casx-1 <= 8:
-			if ocupadas[self.casy+2][self.casx-1] == 0:
-				visor.blit(puntoazul,(casilla[self.casx-1],casilla[self.casy+2]))
-				casposibles[3]=(self.casx-1,self.casy+2)
-			elif ocupadas[self.casy+2][self.casx-1] == ccomer:
+			if ocupadas[self.casy+2][self.casx-1] == 0 or ocupadas[self.casy+2][self.casx-1] == ccomer:
 				visor.blit(puntoazul,(casilla[self.casx-1],casilla[self.casy+2]))
 				casposibles[3]=(self.casx-1,self.casy+2)
 		if 0 < self.casy-2 <= 8 and 0 < self.casx+1 <= 8:
-			if ocupadas[self.casy-2][self.casx+1] == 0:
+			if ocupadas[self.casy-2][self.casx+1] == 0 or ocupadas[self.casy-2][self.casx+1] == ccomer:
 				visor.blit(puntoazul,(casilla[self.casx+1],casilla[self.casy-2]))
 				casposibles[4]=(self.casx+1,self.casy-2)
-			elif ocupadas[self.casy-2][self.casx+1] == ccomer:
-				visor.blit(puntoazul,(casilla[self.casx+1],casilla[self.casy-2]))
-				casposibles[4]=(self.casx+1,self.casy-2)
-			
 		if 0 < self.casy-1 <= 8 and 0 < self.casx-2 <= 8:
-			if ocupadas[self.casy-1][self.casx-2] == 0:
-				visor.blit(puntoazul,(casilla[self.casx-2],casilla[self.casy-1]))
-				casposibles[5]=(self.casx-2,self.casy-1)
-			elif ocupadas[self.casy-1][self.casx-2] == ccomer:
+			if ocupadas[self.casy-1][self.casx-2] == 0 or ocupadas[self.casy-1][self.casx-2] == ccomer:
 				visor.blit(puntoazul,(casilla[self.casx-2],casilla[self.casy-1]))
 				casposibles[5]=(self.casx-2,self.casy-1)
 		if 0 < self.casy+1 <= 8 and 0 < self.casx+2 <= 8:
-			if ocupadas[self.casy+1][self.casx+2] == 0:
-				visor.blit(puntoazul,(casilla[self.casx+2],casilla[self.casy+1]))
-				casposibles[6]=(self.casx+2,self.casy+1)
-			elif ocupadas[self.casy+1][self.casx+2] == ccomer:
+			if ocupadas[self.casy+1][self.casx+2] == 0 or ocupadas[self.casy+1][self.casx+2] == ccomer:
 				visor.blit(puntoazul,(casilla[self.casx+2],casilla[self.casy+1]))
 				casposibles[6]=(self.casx+2,self.casy+1)
 		if 0 < self.casy+1 <= 8 and 0 < self.casx-2 <= 8:
-			if ocupadas[self.casy+1][self.casx-2] == 0:
-				visor.blit(puntoazul,(casilla[self.casx-2],casilla[self.casy+1]))
-				casposibles[7]=(self.casx-2,self.casy+1)
-			elif ocupadas[self.casy+1][self.casx-2] == ccomer:
+			if ocupadas[self.casy+1][self.casx-2] == 0 or ocupadas[self.casy+1][self.casx-2] == ccomer:
 				visor.blit(puntoazul,(casilla[self.casx-2],casilla[self.casy+1]))
 				casposibles[7]=(self.casx-2,self.casy+1)
 		if 0 < self.casy-1 <= 8 and 0 < self.casx+2 <= 8:
-			if ocupadas[self.casy-1][self.casx+2] == 0:
-				visor.blit(puntoazul,(casilla[self.casx+2],casilla[self.casy-1]))
-				casposibles[8]=(self.casx+2,self.casy-1)
-			elif ocupadas[self.casy-1][self.casx+2] == ccomer:
+			if ocupadas[self.casy-1][self.casx+2] == 0 or ocupadas[self.casy-1][self.casx+2] == ccomer:
 				visor.blit(puntoazul,(casilla[self.casx+2],casilla[self.casy-1]))
 				casposibles[8]=(self.casx+2,self.casy-1)
 		return casposibles
