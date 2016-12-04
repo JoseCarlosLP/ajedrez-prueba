@@ -231,10 +231,10 @@ class creapeonegro(metapieza):
 			if ocupadas[self.casy+1][self.casx] < 1:	
 				visor.blit(puntoazul,(casilla[self.casx],casilla[self.casy+1]))
 				casposibles[0]=(self.casx,self.casy+1)
-		if 0 < self.casy+2 <= 8 and 0 < self.casx <= 8:
-			if self.casy == 2 and ocupadas[self.casy+2][self.casx] < 1:
-				visor.blit(puntoazul,(casilla[self.casx],casilla[4]))
-				casposibles[1]=(self.casx,self.casy+2)
+				if 0 < self.casy+2 <= 8 and 0 < self.casx <= 8:
+					if self.casy == 2 and ocupadas[self.casy+2][self.casx] < 1:
+						visor.blit(puntoazul,(casilla[self.casx],casilla[4]))
+						casposibles[1]=(self.casx,self.casy+2)
 		if 0 < self.casy+1 <= 8 and 0 < self.casx+1 <= 8:
 			if ocupadas[self.casy+1][self.casx+1] == 1:
 				visor.blit(puntoazul,(casilla[self.casx+1],casilla[self.casy+1]))
@@ -255,11 +255,11 @@ class creapeonblanco(metapieza):
 			if ocupadas[self.casy-1][self.casx] < 1:	
 				visor.blit(puntoazul,(casilla[self.casx],casilla[self.casy-1]))
 				casposibles[0]=(self.casx,self.casy-1)
-		if 0 < self.casy-1 <= 8 and 0 < self.casx <= 8:
-			if self.casy == 7 and ocupadas[self.casy-2][self.casx] < 1:
-				visor.blit(puntoazul,(casilla[self.casx],casilla[5]))
-				casposibles[1]=(self.casx,self.casy-2)
-		if 0 < self.casy-2 <= 8 and 0 < self.casx+1 <= 8:
+				if 0 < self.casy-2 <= 8 and 0 < self.casx <= 8:
+					if self.casy == 7 and ocupadas[self.casy-2][self.casx] < 1:
+						visor.blit(puntoazul,(casilla[self.casx],casilla[5]))
+						casposibles[1]=(self.casx,self.casy-2)
+		if 0 < self.casy-1 <= 8 and 0 < self.casx+1 <= 8:
 			if ocupadas[self.casy-1][self.casx+1] == 2:
 				visor.blit(puntoazul,(casilla[self.casx+1],casilla[self.casy-1]))
 				casposibles[2]=(self.casx+1,self.casy-1)
