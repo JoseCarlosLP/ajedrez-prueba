@@ -208,39 +208,17 @@ class metapieza():
 
 class metaballo():
 	def movcaballo(self,ccomer):
-		casposibles=[None] * 10
-		if 0 < self.casy-2 <= 8 and 0 < self.casx-1 <= 8:
-			if ocupadas[self.casy-2][self.casx-1] == 0 or ocupadas[self.casy-2][self.casx-1] == ccomer:
-				visor.blit(puntoazul,(casilla[self.casx-1],casilla[self.casy-2]))
-				casposibles[1]=(self.casx-1,self.casy-2)
-		if 0 < self.casy+2 <= 8 and 0 < self.casx+1 <= 8:
-			if ocupadas[self.casy+2][self.casx+1] == 0 or ocupadas[self.casy+2][self.casx+1] == ccomer:
-				visor.blit(puntoazul,(casilla[self.casx+1],casilla[self.casy+2]))
-				casposibles[2]=(self.casx+1,self.casy+2)
-		if 0 < self.casy+2 <= 8 and 0 < self.casx-1 <= 8:
-			if ocupadas[self.casy+2][self.casx-1] == 0 or ocupadas[self.casy+2][self.casx-1] == ccomer:
-				visor.blit(puntoazul,(casilla[self.casx-1],casilla[self.casy+2]))
-				casposibles[3]=(self.casx-1,self.casy+2)
-		if 0 < self.casy-2 <= 8 and 0 < self.casx+1 <= 8:
-			if ocupadas[self.casy-2][self.casx+1] == 0 or ocupadas[self.casy-2][self.casx+1] == ccomer:
-				visor.blit(puntoazul,(casilla[self.casx+1],casilla[self.casy-2]))
-				casposibles[4]=(self.casx+1,self.casy-2)
-		if 0 < self.casy-1 <= 8 and 0 < self.casx-2 <= 8:
-			if ocupadas[self.casy-1][self.casx-2] == 0 or ocupadas[self.casy-1][self.casx-2] == ccomer:
-				visor.blit(puntoazul,(casilla[self.casx-2],casilla[self.casy-1]))
-				casposibles[5]=(self.casx-2,self.casy-1)
-		if 0 < self.casy+1 <= 8 and 0 < self.casx+2 <= 8:
-			if ocupadas[self.casy+1][self.casx+2] == 0 or ocupadas[self.casy+1][self.casx+2] == ccomer:
-				visor.blit(puntoazul,(casilla[self.casx+2],casilla[self.casy+1]))
-				casposibles[6]=(self.casx+2,self.casy+1)
-		if 0 < self.casy+1 <= 8 and 0 < self.casx-2 <= 8:
-			if ocupadas[self.casy+1][self.casx-2] == 0 or ocupadas[self.casy+1][self.casx-2] == ccomer:
-				visor.blit(puntoazul,(casilla[self.casx-2],casilla[self.casy+1]))
-				casposibles[7]=(self.casx-2,self.casy+1)
-		if 0 < self.casy-1 <= 8 and 0 < self.casx+2 <= 8:
-			if ocupadas[self.casy-1][self.casx+2] == 0 or ocupadas[self.casy-1][self.casx+2] == ccomer:
-				visor.blit(puntoazul,(casilla[self.casx+2],casilla[self.casy-1]))
-				casposibles[8]=(self.casx+2,self.casy-1)
+		casposibles=[None] * 9
+		listaprobar=[-2,-1,1,2]
+		num = 0
+		for x in listaprobar:
+			for y in listaprobar:
+				if abs(x) != abs(y):
+					if 0 < self.casy+y <= 8 and 0 < self.casx+x <= 8:
+						if ocupadas[self.casy+y][self.casx+x] == 0 or ocupadas[self.casy+y][self.casx+x] == ccomer:
+							num += 1
+							visor.blit(puntoazul,(casilla[self.casx+x],casilla[self.casy+y]))
+							casposibles[num]=(self.casx+x,self.casy+y)
 		return casposibles
 
 class creapeonegro(metapieza):
