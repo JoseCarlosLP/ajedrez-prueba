@@ -380,7 +380,6 @@ class creareyblanco(metapieza):
 				casposibles[2] = (self.casx-2,self.casy)
 				largo = 1 
 		posimovr[2]=casposibles
-		print ocupadas
 		return posimovr
 
 class creareinanegra(metapieza):
@@ -518,7 +517,7 @@ while True:
 
 	if len(cliked) == 2:#segundo click
 		posraton = cliked[0]
-		nuevacasillax = sacasillax(posraton);
+		nuevacasillax = sacasillax(posraton)
 		nuevacasillay = sacasillay(posraton)
 		if fichamover=="pn":
 			if (nuevacasillax,nuevacasillay) in posimovp:
@@ -591,7 +590,6 @@ while True:
 				if reyblanco.casx == 5:
 					if (nuevacasillax,nuevacasillay) in posimovr[2]:
 						if largo == 0:
-							print "bien"
 							muevepieza(torreblanca[2],6,8,"blancas")
 						else:
 							muevepieza(torreblanca[1],4,8,"blancas")
