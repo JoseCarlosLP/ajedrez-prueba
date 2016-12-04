@@ -243,21 +243,6 @@ class metaballo():
 				casposibles[8]=(self.casx+2,self.casy-1)
 		return casposibles
 
-class metarey():
-	def enroke(self,color):
-		casposibles=[None] * 3
-		global largo
-		if self.casx == 5:
-			if ocupadas[self.casy][self.casx+2] == 0 and ocupadas[self.casy][self.casx+1] == 0:
-				visor.blit(puntoazul,(casilla[self.casx+2],casilla[self.casy]))
-				casposibles[1] = (self.casx+2,self.casy) 
-				largo = 0
-			if ocupadas[self.casy][self.casx-3] == 0 and ocupadas[self.casy][self.casx-2] == 0 and ocupadas[self.casy][self.casx-1] == 0:
-				visor.blit(puntoazul,(casilla[self.casx-2],casilla[self.casy]))
-				casposibles[2] = (self.casx-2,self.casy)
-				largo = 1 
-		return casposibles
-
 class creapeonegro(metapieza):
 	def __init__(self,x,y=2):
 		self.foto = pygame.image.load('peonegro.png')
@@ -346,9 +331,10 @@ class crealfilblanco(metapieza):
 		self.foto = pygame.image.load('alfilblanco.png')
 		metapieza.__init__(self,x,y)
 	def puedemovera(self):
-		return metapieza.movdiagonal(self,2)	
+		return metapieza.movdiagonal(self,2)
 
-class creareynegro(metapieza,metarey):
+largo = 2
+class creareynegro(metapieza):
 	def __init__(self,x=5,y=1):
 		self.foto = pygame.image.load('reynegro.png')
 		metapieza.__init__(self,x,y)
@@ -356,11 +342,23 @@ class creareynegro(metapieza,metarey):
 		posimovr=[None] * 3
 		posimovr[0]=metapieza.movlineal(self,1,1)
 		posimovr[1]=metapieza.movdiagonal(self,1,1)
-		if sacapiezadelaposicion(self.casx-4,self.casy) == torrenegra[1] or sacapiezadelaposicion(self.casx-4,self.casy) == torrenegra[2]:
-			posimovr[2]=metarey.enroke(self,2)
+		casposibles=[None] * 3
+		global largo
+		if self.casx == 5:
+			if sacapiezadelaposicion(8,1) == torrenegra[2] and \
+			ocupadas[self.casy][self.casx+2] == 0 and ocupadas[self.casy][self.casx+1] == 0:
+				visor.blit(puntoazul,(casilla[self.casx+2],casilla[self.casy]))
+				casposibles[1] = (self.casx+2,self.casy) 
+				largo = 0
+			if sacapiezadelaposicion(1,1) == torrenegra[1] and \
+			ocupadas[self.casy][self.casx-3] == 0 and ocupadas[self.casy][self.casx-2] == 0 and ocupadas[self.casy][self.casx-1] == 0:
+				visor.blit(puntoazul,(casilla[self.casx-2],casilla[self.casy]))
+				casposibles[2] = (self.casx-2,self.casy)
+				largo = 1 
+		posimovr[2]=casposibles
 		return posimovr
 
-class creareyblanco(metapieza,metarey):
+class creareyblanco(metapieza):
 	def __init__(self,x=5,y=8):
 		self.foto = pygame.image.load('reyblanco.png')
 		metapieza.__init__(self,x,y)
@@ -368,8 +366,21 @@ class creareyblanco(metapieza,metarey):
 		posimovr=[None] * 3
 		posimovr[0]=metapieza.movlineal(self,2,1)
 		posimovr[1]=metapieza.movdiagonal(self,2,1)
-		if sacapiezadelaposicion(self.casx-4,self.casy) == torreblanca[1] or sacapiezadelaposicion(self.casx-4,self.casy) == torreblanca[2]:
-			posimovr[2]=metarey.enroke(self,1)
+		casposibles=[None] * 3
+		global largo
+		if self.casx == 5:
+			if sacapiezadelaposicion(8,8) == torreblanca[2] and \
+			ocupadas[self.casy][self.casx+2] == 0 and ocupadas[self.casy][self.casx+1] == 0:
+				visor.blit(puntoazul,(casilla[self.casx+2],casilla[self.casy]))
+				casposibles[1] = (self.casx+2,self.casy) 
+				largo = 0
+			if sacapiezadelaposicion(1,8) == torreblanca[1] and \
+			ocupadas[self.casy][self.casx-3] == 0 and ocupadas[self.casy][self.casx-2] == 0 and ocupadas[self.casy][self.casx-1] == 0:
+				visor.blit(puntoazul,(casilla[self.casx-2],casilla[self.casy]))
+				casposibles[2] = (self.casx-2,self.casy)
+				largo = 1 
+		posimovr[2]=casposibles
+		print ocupadas
 		return posimovr
 
 class creareinanegra(metapieza):
@@ -507,7 +518,7 @@ while True:
 
 	if len(cliked) == 2:#segundo click
 		posraton = cliked[0]
-		nuevacasillax = sacasillax(posraton)
+		nuevacasillax = sacasillax(posraton);
 		nuevacasillay = sacasillay(posraton)
 		if fichamover=="pn":
 			if (nuevacasillax,nuevacasillay) in posimovp:
@@ -563,11 +574,12 @@ while True:
 			(nuevacasillax,nuevacasillay) in posimovr[2]:
 				if ocupadas[nuevacasillay][nuevacasillax] != 0:
 					comepieza(sacapiezadelaposicion(nuevacasillax,nuevacasillay))
-				if (nuevacasillax,nuevacasillay) in posimovr[2]:
-					if largo == 0:
-						muevepieza(torrenegra[2],6,1,2)
-					else:
-						muevepieza(torrenegra[1],4,1,2)
+				if reynegro.casx == 5:
+					if (nuevacasillax,nuevacasillay) in posimovr[2]:
+						if largo == 0:
+							muevepieza(torrenegra[2],6,1,"negras")
+						else:
+							muevepieza(torrenegra[1],4,1,"negras")
 				muevepieza(reynegro,nuevacasillax,nuevacasillay,turno)
 				turno = "blancas"
 		elif fichamover=="rb":
@@ -576,11 +588,13 @@ while True:
 			(nuevacasillax,nuevacasillay) in posimovr[2]:
 				if ocupadas[nuevacasillay][nuevacasillax] != 0:
 					comepieza(sacapiezadelaposicion(nuevacasillax,nuevacasillay))
-				if (nuevacasillax,nuevacasillay) in posimovr[2]:
-					if largo == 0:
-						muevepieza(torreblanca[2],6,8,1)
-					else:
-						muevepieza(torreblanca[1],4,8,1)
+				if reyblanco.casx == 5:
+					if (nuevacasillax,nuevacasillay) in posimovr[2]:
+						if largo == 0:
+							print "bien"
+							muevepieza(torreblanca[2],6,8,"blancas")
+						else:
+							muevepieza(torreblanca[1],4,8,"blancas")
 				muevepieza(reyblanco,nuevacasillax,nuevacasillay,turno)
 				turno = "negras"
 		elif fichamover=="in":
