@@ -288,8 +288,8 @@ class creareynegro(metapieza):
 		metapieza.__init__(self,x,y,2)
 	def puedemovera(self):
 		posimovr=[None] * 3
-		posimovr[0]=metapieza.movlineal(self)
-		posimovr[1]=metapieza.movdiagonal(self)
+		posimovr[0]=metapieza.movlineal(self,1)
+		posimovr[1]=metapieza.movdiagonal(self,1)
 		casposibles=[None] * 3
 		global largo
 		if self.casx == 5:
@@ -312,8 +312,8 @@ class creareyblanco(metapieza):
 		metapieza.__init__(self,x,y,1)
 	def puedemovera(self):
 		posimovr=[None] * 3
-		posimovr[0]=metapieza.movlineal(self)
-		posimovr[1]=metapieza.movdiagonal(self)
+		posimovr[0]=metapieza.movlineal(self,1)
+		posimovr[1]=metapieza.movdiagonal(self,1)
 		casposibles=[None] * 3
 		global largo
 		if self.casx == 5:
