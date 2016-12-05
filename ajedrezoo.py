@@ -72,15 +72,13 @@ def	sacapiezadelaposicion(casillax,casillay):
 	elif casillax == reinablanca.casx and casillay == reinablanca.casy:
 		return reinablanca
 		
-def sacasillax(posraton):
+def sacasilla(posraton):
 	for i in range(9):
 		if casilla[i] < posraton[0] <= casilla[i+1]:
-			return i
-
-def sacasillay(posraton):
-	for i in range(9):
+			x = i
 		if casilla[i] < posraton[1] <= casilla[i+1]:
-			return i
+			y = i
+	return x,y
 
 class metapieza():
 	def __init__(self,x,y,color):
@@ -184,13 +182,12 @@ class metaballo():
 		listaprobar=[-2,-1,1,2]
 		num = 0
 		for x in listaprobar:
-			for y in listaprobar:
-				if abs(x) != abs(y):
-					if 0 < self.casy+y <= 8 and 0 < self.casx+x <= 8:
-						if ocupadas[self.casy+y][self.casx+x] == 0 or ocupadas[self.casy+y][self.casx+x] == 3-self.color:
-							num += 1
-							visor.blit(puntoazul,(casilla[self.casx+x],casilla[self.casy+y]))
-							casposibles[num]=(self.casx+x,self.casy+y)
+			for y in [-(3-abs(x)),3-abs(x)]:#idea de papa + eficiente
+				if 0 < self.casy+y <= 8 and 0 < self.casx+x <= 8:
+					if ocupadas[self.casy+y][self.casx+x] == 0 or ocupadas[self.casy+y][self.casx+x] == 3-self.color:
+						num += 1
+						visor.blit(puntoazul,(casilla[self.casx+x],casilla[self.casy+y]))
+						casposibles[num]=(self.casx+x,self.casy+y)
 		return casposibles
 
 class creapeonegro(metapieza):
@@ -412,8 +409,7 @@ while True:
 	
 	if len(cliked) == 1:#primer click
 		posraton = cliked[0]
-		casillax=sacasillax(posraton)
-		casillay=sacasillay(posraton)
+		casillax,casillay=sacasilla(posraton)
 		for b in range(1,9):
 			if casillax == peonegro[b].casx and casillay == peonegro[b].casy and turno == "negras":
 				posimovp = peonegro[b].puedemovera()
@@ -465,8 +461,7 @@ while True:
 
 	if len(cliked) == 2:#segundo click
 		posraton = cliked[0]
-		nuevacasillax = sacasillax(posraton)
-		nuevacasillay = sacasillay(posraton)
+		nuevacasillax,nuevacasillay = sacasilla(posraton)
 		if fichamover=="pn":
 			if (nuevacasillax,nuevacasillay) in posimovp:
 				if ocupadas[nuevacasillay][nuevacasillax] != 0:
