@@ -97,7 +97,7 @@ class metapieza():
 		ordr = 1
 		vrar = 1
 		vrab = 1
-		casposibles=[None] * movmax * 4
+		casposibles=[None] * 32
 		while casi < movmax:
 			casi+=1
 			if 0 < self.casy <= 8 and 0 < self.casx-casi <= 8 and oriz == 1:		
@@ -139,7 +139,7 @@ class metapieza():
 		abdr = 1
 		ardr = 1
 		abiz = 1
-		casposibles=[None] * movmax * 4
+		casposibles=[None] * 32
 		while casi < movmax:
 			casi+=1
 			if 0 < self.casy-casi <= 8 and 0 < self.casx-casi <= 8 and ariz == 1:		
