@@ -7,6 +7,7 @@ pygame.init()
 visor = pygame.display.set_mode((560,560))
 pygame.display.set_caption("ajedrez")
 
+
 casilla=[0,0,70,140,210,280,350,420,490,560,999]
 
 ocupadas=[
@@ -97,7 +98,7 @@ class metapieza():
 		ordr = 1
 		vrar = 1
 		vrab = 1
-		casposibles=[None] * 32
+		casposibles=[]
 		while casi < movmax:
 			casi+=1
 			if 0 < self.casy <= 8 and 0 < self.casx-casi <= 8 and oriz == 1:		
@@ -105,7 +106,7 @@ class metapieza():
 					oriz = 0
 				else:
 					visor.blit(puntoazul,(casilla[self.casx-casi],casilla[self.casy]))
-					casposibles[casi]=(self.casx-casi,self.casy)
+					casposibles.append((self.casx-casi,self.casy))
 					if ocupadas[self.casy][self.casx-casi] == 3-self.color:
 						oriz = 0	
 			if 0 < self.casy <= 8 and 0 < self.casx+casi <= 8 and ordr == 1:		
@@ -113,7 +114,7 @@ class metapieza():
 					ordr = 0
 				else:
 					visor.blit(puntoazul,(casilla[self.casx+casi],casilla[self.casy]))
-					casposibles[movmax+casi]=(self.casx+casi,self.casy)
+					casposibles.append((self.casx+casi,self.casy))
 					if ocupadas[self.casy][self.casx+casi] == 3-self.color:
 						ordr = 0					
 			if 0 < self.casy-casi <= 8 and 0 < self.casx <= 8 and vrab == 1:		
@@ -121,7 +122,7 @@ class metapieza():
 					vrab = 0
 				else:
 					visor.blit(puntoazul,(casilla[self.casx],casilla[self.casy-casi]))
-					casposibles[movmax*2+casi]=(self.casx,self.casy-casi)
+					casposibles.append((self.casx,self.casy-casi))
 					if ocupadas[self.casy-casi][self.casx] == 3-self.color:
 						vrab = 0	
 			if 0 < self.casy+casi <= 8 and 0 < self.casx <= 8 and vrar == 1:		
@@ -129,7 +130,7 @@ class metapieza():
 					vrar = 0
 				else:
 					visor.blit(puntoazul,(casilla[self.casx],casilla[self.casy+casi]))
-					casposibles[movmax*3+casi]=(self.casx,self.casy+casi)
+					casposibles.append((self.casx,self.casy+casi))
 					if ocupadas[self.casy+casi][self.casx] == 3-self.color:
 						vrar = 0
 		return casposibles
@@ -139,7 +140,7 @@ class metapieza():
 		abdr = 1
 		ardr = 1
 		abiz = 1
-		casposibles=[None] * 32
+		casposibles=[]
 		while casi < movmax:
 			casi+=1
 			if 0 < self.casy-casi <= 8 and 0 < self.casx-casi <= 8 and ariz == 1:		
@@ -147,7 +148,7 @@ class metapieza():
 					ariz = 0
 				else:
 					visor.blit(puntoazul,(casilla[self.casx-casi],casilla[self.casy-casi]))
-					casposibles[casi]=(self.casx-casi,self.casy-casi)
+					casposibles.append((self.casx-casi,self.casy-casi))
 					if ocupadas[self.casy-casi][self.casx-casi] == 3-self.color:
 						ariz = 0	
 			if 0 < self.casy+casi <= 8 and 0 < self.casx+casi <= 8 and abdr == 1:		
@@ -155,7 +156,7 @@ class metapieza():
 					abdr = 0
 				else:
 					visor.blit(puntoazul,(casilla[self.casx+casi],casilla[self.casy+casi]))
-					casposibles[movmax+casi]=(self.casx+casi,self.casy+casi)
+					casposibles.append((self.casx+casi,self.casy+casi))
 					if ocupadas[self.casy+casi][self.casx+casi] == 3-self.color:
 						abdr = 0	
 			if 0 < self.casy-casi <= 8 and 0 < self.casx+casi <= 8 and ardr == 1:		
@@ -163,7 +164,7 @@ class metapieza():
 					ardr = 0
 				else:
 					visor.blit(puntoazul,(casilla[self.casx+casi],casilla[self.casy-casi]))
-					casposibles[movmax*2+casi]=(self.casx+casi,self.casy-casi)
+					casposibles.append((self.casx+casi,self.casy-casi))
 					if ocupadas[self.casy-casi][self.casx+casi] == 3-self.color:
 						ardr = 0	
 			if 0 < self.casy+casi <= 8 and 0 < self.casx-casi <= 8 and abiz == 1:		
@@ -171,14 +172,14 @@ class metapieza():
 					abiz = 0
 				else:
 					visor.blit(puntoazul,(casilla[self.casx-casi],casilla[self.casy+casi]))
-					casposibles[movmax*3+casi]=(self.casx-casi,self.casy+casi)
+					casposibles.append((self.casx-casi,self.casy+casi))
 					if ocupadas[self.casy+casi][self.casx-casi] == 3-self.color:
 						abiz = 0
 		return casposibles
 
 class metaballo():
 	def movcaballo(self):
-		casposibles=[None] * 8
+		casposibles=[]
 		listaprobar=[-2,-1,1,2]
 		num = 0
 		for x in listaprobar:
@@ -186,7 +187,7 @@ class metaballo():
 				if 0 < self.casy+y <= 8 and 0 < self.casx+x <= 8:
 					if ocupadas[self.casy+y][self.casx+x] == 0 or ocupadas[self.casy+y][self.casx+x] == 3-self.color:
 						visor.blit(puntoazul,(casilla[self.casx+x],casilla[self.casy+y]))
-						casposibles[num]=(self.casx+x,self.casy+y)
+						casposibles.append((self.casx+x,self.casy+y))
 						num += 1
 		return casposibles
 
@@ -195,22 +196,22 @@ class creapeonegro(metapieza):
 		self.foto = pygame.image.load('peonegro.png')
 		metapieza.__init__(self,x,y,2)
 	def puedemovera(self):
-		casposibles=[None] * 4
+		casposibles=[]
 		if 0 < self.casy+1 <= 8 and 0 < self.casx <= 8:
 			if ocupadas[self.casy+1][self.casx] < 1:	
 				visor.blit(puntoazul,(casilla[self.casx],casilla[self.casy+1]))
-				casposibles[0]=(self.casx,self.casy+1)
+				casposibles.append((self.casx,self.casy+1))
 				if self.casy == 2 and ocupadas[4][self.casx] < 1:
 					visor.blit(puntoazul,(casilla[self.casx],casilla[4]))
-					casposibles[1]=(self.casx,self.casy+2)
+					casposibles.append((self.casx,self.casy+2))
 		if 0 < self.casy+1 <= 8 and 0 < self.casx+1 <= 8:
 			if ocupadas[self.casy+1][self.casx+1] == 1:
 				visor.blit(puntoazul,(casilla[self.casx+1],casilla[self.casy+1]))
-				casposibles[2]=(self.casx+1,self.casy+1)
+				casposibles.append((self.casx+1,self.casy+1))
 		if 0 < self.casy+1 <= 8 and 0 < self.casx-1 <= 8:
 			if ocupadas[self.casy+1][self.casx-1] == 1:
 				visor.blit(puntoazul,(casilla[self.casx-1],casilla[self.casy+1]))
-				casposibles[3]=(self.casx-1,self.casy+1)
+				casposibles.append((self.casx-1,self.casy+1))
 		return casposibles
 
 class creapeonblanco(metapieza):
@@ -218,22 +219,22 @@ class creapeonblanco(metapieza):
 		self.foto = pygame.image.load('peonblanco.png')
 		metapieza.__init__(self,x,y,1)
 	def puedemovera(self):
-		casposibles=[None] * 4
+		casposibles=[]
 		if 0 < self.casy-1 <= 8 and 0 < self.casx <= 8:
 			if ocupadas[self.casy-1][self.casx] < 1:	
 				visor.blit(puntoazul,(casilla[self.casx],casilla[self.casy-1]))
-				casposibles[0]=(self.casx,self.casy-1)
+				casposibles.append((self.casx,self.casy-1))
 				if self.casy == 7 and ocupadas[5][self.casx] < 1:
 					visor.blit(puntoazul,(casilla[self.casx],casilla[5]))
-					casposibles[1]=(self.casx,self.casy-2)
+					casposibles.append((self.casx,self.casy-2))
 		if 0 < self.casy-1 <= 8 and 0 < self.casx+1 <= 8:
 			if ocupadas[self.casy-1][self.casx+1] == 2:
 				visor.blit(puntoazul,(casilla[self.casx+1],casilla[self.casy-1]))
-				casposibles[2]=(self.casx+1,self.casy-1)
+				casposibles.append((self.casx+1,self.casy-1))
 		if 0 < self.casy-1 <= 8 and 0 < self.casx-1 <= 8:
 			if ocupadas[self.casy-1][self.casx-1] == 2:
 				visor.blit(puntoazul,(casilla[self.casx-1],casilla[self.casy-1]))
-				casposibles[3]=(self.casx-1,self.casy-1)
+				casposibles.append((self.casx-1,self.casy-1))
 		return casposibles
 
 class creacaballonegro(metapieza,metaballo):
@@ -284,23 +285,23 @@ class creareynegro(metapieza):
 		self.foto = pygame.image.load('reynegro.png')
 		metapieza.__init__(self,x,y,2)
 	def puedemovera(self):
-		posimovr=[None] * 3
-		posimovr[0]=metapieza.movlineal(self,1)
-		posimovr[1]=metapieza.movdiagonal(self,1)
-		casposibles=[None] * 3
+		posimovr=[]
+		posimovr.append(metapieza.movlineal(self,1))
+		posimovr.append(metapieza.movdiagonal(self,1))
+		casposibles=[]
 		global largo
 		if self.casx == 5:
 			if sacapiezadelaposicion(8,1) == torrenegra[2] and \
 			ocupadas[self.casy][self.casx+2] == 0 and ocupadas[self.casy][self.casx+1] == 0:
 				visor.blit(puntoazul,(casilla[self.casx+2],casilla[self.casy]))
-				casposibles[1] = (self.casx+2,self.casy) 
+				casposibles.append((self.casx+2,self.casy)) 
 				largo = 0
 			if sacapiezadelaposicion(1,1) == torrenegra[1] and \
 			ocupadas[self.casy][self.casx-3] == 0 and ocupadas[self.casy][self.casx-2] == 0 and ocupadas[self.casy][self.casx-1] == 0:
 				visor.blit(puntoazul,(casilla[self.casx-2],casilla[self.casy]))
-				casposibles[2] = (self.casx-2,self.casy)
+				casposibles.append((self.casx-2,self.casy))
 				largo = 1 
-		posimovr[2]=casposibles
+		posimovr.append(casposibles)
 		return posimovr
 
 class creareyblanco(metapieza):
@@ -308,23 +309,23 @@ class creareyblanco(metapieza):
 		self.foto = pygame.image.load('reyblanco.png')
 		metapieza.__init__(self,x,y,1)
 	def puedemovera(self):
-		posimovr=[None] * 3
-		posimovr[0]=metapieza.movlineal(self,1)
-		posimovr[1]=metapieza.movdiagonal(self,1)
-		casposibles=[None] * 3
+		posimovr=[]
+		posimovr.append(metapieza.movlineal(self,1))
+		posimovr.append(metapieza.movdiagonal(self,1))
+		casposibles=[]
 		global largo
 		if self.casx == 5:
 			if sacapiezadelaposicion(8,8) == torreblanca[2] and \
 			ocupadas[self.casy][self.casx+2] == 0 and ocupadas[self.casy][self.casx+1] == 0:
 				visor.blit(puntoazul,(casilla[self.casx+2],casilla[self.casy]))
-				casposibles[1] = (self.casx+2,self.casy) 
+				casposibles.append((self.casx+2,self.casy))
 				largo = 0
 			if sacapiezadelaposicion(1,8) == torreblanca[1] and \
 			ocupadas[self.casy][self.casx-3] == 0 and ocupadas[self.casy][self.casx-2] == 0 and ocupadas[self.casy][self.casx-1] == 0:
 				visor.blit(puntoazul,(casilla[self.casx-2],casilla[self.casy]))
-				casposibles[2] = (self.casx-2,self.casy)
+				casposibles.append((self.casx-2,self.casy))
 				largo = 1 
-		posimovr[2]=casposibles
+		posimovr.append(casposibles)
 		return posimovr
 
 class creareinanegra(metapieza):
@@ -332,9 +333,9 @@ class creareinanegra(metapieza):
 		self.foto = pygame.image.load('reinanegra.png')
 		metapieza.__init__(self,x,y,2)
 	def puedemovera(self):
-		posimovi=[None] * 2
-		posimovi[0]=metapieza.movlineal(self)
-		posimovi[1]=metapieza.movdiagonal(self)
+		posimovi=[]
+		posimovi.append(metapieza.movlineal(self))
+		posimovi.append(metapieza.movdiagonal(self))
 		return posimovi
 
 class creareinablanca(metapieza):
@@ -342,40 +343,40 @@ class creareinablanca(metapieza):
 		self.foto = pygame.image.load('reinablanca.png')
 		metapieza.__init__(self,x,y,1)
 	def puedemovera(self):
-		posimovi=[None] * 2
-		posimovi[0]=metapieza.movlineal(self)
-		posimovi[1]=metapieza.movdiagonal(self)
+		posimovi=[]
+		posimovi.append(metapieza.movlineal(self))
+		posimovi.append(metapieza.movdiagonal(self))
 		return posimovi
 			
 puntoazul = pygame.image.load('puntoazul.png')
 
-peonegro = [None] * 9
-peonblanco = [None] * 9
-caballonegro = [None] * 3
-caballoblanco = [None] * 3
-torrenegra = [None] * 3
-torreblanca = [None] * 3
-alfilnegro = [None] * 3
-alfilblanco = [None] * 3
+peonegro = [None]
+peonblanco = [None]
+caballonegro = [None]
+caballoblanco = [None]
+torrenegra = [None]
+torreblanca = [None]
+alfilnegro = [None]
+alfilblanco = [None]
 
 for p in range(1,9):#1-8
-	peonegro[p] = creapeonegro(p)
+	peonegro.append(creapeonegro(p))
 	ocupasilla(peonegro[p])
-	peonblanco[p] = creapeonblanco(p)
+	peonblanco.append(creapeonblanco(p))
 	ocupasilla(peonblanco[p])
 
 for c in (1,2):
-	caballonegro[c] = creacaballonegro(ud7(c))
+	caballonegro.append(creacaballonegro(ud7(c)))
 	ocupasilla(caballonegro[c])
-	caballoblanco[c] = creacaballoblanco(ud7(c))
+	caballoblanco.append(creacaballoblanco(ud7(c)))
 	ocupasilla(caballoblanco[c])
-	torrenegra[c] = creatorrenegra(pow(c,3))
+	torrenegra.append(creatorrenegra(pow(c,3)))
 	ocupasilla(torrenegra[c])
-	torreblanca[c] = creatorreblanca(pow(c,3))
+	torreblanca.append(creatorreblanca(pow(c,3)))
 	ocupasilla(torreblanca[c])
-	alfilnegro[c] = crealfilnegro(c*3)
+	alfilnegro.append(crealfilnegro(c*3))
 	ocupasilla(alfilnegro[c])
-	alfilblanco[c] = crealfilblanco(c*3)
+	alfilblanco.append(crealfilblanco(c*3))
 	ocupasilla(alfilblanco[c])
 
 reynegro = creareynegro()
