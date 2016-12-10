@@ -97,7 +97,7 @@ class metapieza():
 		ordr = 1
 		vrar = 1
 		vrab = 1
-		casposibles=[None] * 32
+		casposibles=[None] * movmax * 4
 		while casi < movmax:
 			casi+=1
 			if 0 < self.casy <= 8 and 0 < self.casx-casi <= 8 and oriz == 1:		
@@ -139,7 +139,7 @@ class metapieza():
 		abdr = 1
 		ardr = 1
 		abiz = 1
-		casposibles=[None] * 32
+		casposibles=[None] * movmax * 4
 		while casi < movmax:
 			casi+=1
 			if 0 < self.casy-casi <= 8 and 0 < self.casx-casi <= 8 and ariz == 1:		
@@ -178,16 +178,16 @@ class metapieza():
 
 class metaballo():
 	def movcaballo(self):
-		casposibles=[None] * 9
+		casposibles=[None] * 8
 		listaprobar=[-2,-1,1,2]
 		num = 0
 		for x in listaprobar:
 			for y in [-(3-abs(x)),3-abs(x)]:#idea de papa + eficiente
 				if 0 < self.casy+y <= 8 and 0 < self.casx+x <= 8:
 					if ocupadas[self.casy+y][self.casx+x] == 0 or ocupadas[self.casy+y][self.casx+x] == 3-self.color:
-						num += 1
 						visor.blit(puntoazul,(casilla[self.casx+x],casilla[self.casy+y]))
 						casposibles[num]=(self.casx+x,self.casy+y)
+						num += 1
 		return casposibles
 
 class creapeonegro(metapieza):
