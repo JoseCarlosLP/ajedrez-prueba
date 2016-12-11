@@ -7,7 +7,6 @@ pygame.init()
 visor = pygame.display.set_mode((560,560))
 pygame.display.set_caption("ajedrez")
 
-
 casilla=[0,0,70,140,210,280,350,420,490,560,999]
 
 ocupadas=[
