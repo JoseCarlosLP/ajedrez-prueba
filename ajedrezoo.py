@@ -45,7 +45,7 @@ def	sacapieza(casillax,casillay):
 			return peonegro[b]
 		elif casillax == peonblanco[b].casx and casillay == peonblanco[b].casy:
 			return peonblanco[b]
-	for c in range(1,3):
+	for c in (1,2):
 		if casillax == caballonegro[c].casx and casillay == caballonegro[c].casy:
 			return caballonegro[c]
 		elif casillax == caballoblanco[c].casx and casillay == caballoblanco[c].casy:
@@ -310,7 +310,8 @@ class creareyblanco(metapieza):
 				casposibles.append((self.casx+2,self.casy))
 				largo = 0
 			if sacapieza(1,8) == torreblanca[1] and \
-			ocupadas[self.casy][self.casx-3] == 0 and ocupadas[self.casy][self.casx-2] == 0 and ocupadas[self.casy][self.casx-1] == 0:
+			ocupadas[self.casy][self.casx-3] == 0 and ocupadas[self.casy][self.casx-2] == 0 \
+			and ocupadas[self.casy][self.casx-1] == 0:
 				visor.blit(puntoazul,(casilla[self.casx-2],casilla[self.casy]))
 				casposibles.append((self.casx-2,self.casy))
 				largo = 1 
@@ -359,6 +360,7 @@ for c in (1,2):
 	torreblanca.append(creatorreblanca(pow(c,3)))
 	alfilnegro.append(crealfilnegro(c*3))
 	alfilblanco.append(crealfilblanco(c*3))
+
 reynegro = creareynegro()
 reyblanco = creareyblanco()
 
@@ -372,6 +374,7 @@ cliked=[]
 fichamover=""
 turno="blancas"
 print "empiezan las blancas"
+
 while True:
 	for evento in pygame.event.get():
 		if evento.type == QUIT:
@@ -395,7 +398,7 @@ while True:
 			elif sacapieza(casillax,casillay) == peonblanco[b] and turno == "blancas":
 				posimov = peonblanco[b].puedemovera()
 				fichamover=peonblanco[b]
-		for c in range(1,3):
+		for c in (1,2):
 			if sacapieza(casillax,casillay) == caballonegro[c] and turno == "negras":
 				posimov = caballonegro[c].puedemovera()
 				fichamover=caballonegro[c]
@@ -461,7 +464,7 @@ while True:
 					turno = "blancas"
 				
 				if fichamover == reyblanco:
-					if reyblanco.casx == 5 and reyblanco.casy == 8:
+					if reyblanco.casx == 5:
 						if (nuevacasillax,nuevacasillay) in posimov[2]:
 							if largo == 0:
 								muevepieza(torreblanca[2],6,8)
@@ -470,13 +473,12 @@ while True:
 					muevepieza(reyblanco,nuevacasillax,nuevacasillay)
 					turno = "negras"
 
-	
 	#refrescos y representaciones
 	for d in range(1,9):
 		visor.blit(peonblanco[d].foto, (peonblanco[d].posx,peonblanco[d].posy))
 		visor.blit(peonegro[d].foto, (peonegro[d].posx,peonegro[d].posy))
 		
-	for e in range(1,3):
+	for e in (1,2):
 		visor.blit(torrenegra[e].foto, (torrenegra[e].posx,torrenegra[e].posy))
 		visor.blit(torreblanca[e].foto, (torreblanca[e].posx,torreblanca[e].posy))
 		
