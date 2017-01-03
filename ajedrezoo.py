@@ -454,22 +454,20 @@ while True:
 					comepieza(sacapieza(nuevacasillax,nuevacasillay))
 				
 				if fichamover == reynegro:
-					if reynegro.casx == 5:
-						if (nuevacasillax,nuevacasillay) in posimov[2]:
-							if largo == 0:
-								muevepieza(torrenegra[2],6,1)
-							else:
-								muevepieza(torrenegra[1],4,1)
+					if (nuevacasillax,nuevacasillay) in posimov[2]:
+						if largo == 0:
+							muevepieza(torrenegra[2],6,1)
+						else:
+							muevepieza(torrenegra[1],4,1)
 					muevepieza(reynegro,nuevacasillax,nuevacasillay)
 					turno = "blancas"
 				
 				if fichamover == reyblanco:
-					if reyblanco.casx == 5:
-						if (nuevacasillax,nuevacasillay) in posimov[2]:
-							if largo == 0:
-								muevepieza(torreblanca[2],6,8)
-							else:
-								muevepieza(torreblanca[1],4,8)
+					if (nuevacasillax,nuevacasillay) in posimov[2]:
+						if largo == 0:
+							muevepieza(torreblanca[2],6,8)
+						else:
+							muevepieza(torreblanca[1],4,8)
 					muevepieza(reyblanco,nuevacasillax,nuevacasillay)
 					turno = "negras"
 
