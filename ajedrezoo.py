@@ -41,30 +41,30 @@ def muevepieza(pieza,ncasx,ncasy):
 
 def	sacapieza(casillax,casillay):
 	for b in range(1,9):
-		if casillax == peonegro[b].casx and casillay == peonegro[b].casy:
+		if (casillax,casillay) == (peonegro[b].casx,peonegro[b].casy):
 			return peonegro[b]
-		elif casillax == peonblanco[b].casx and casillay == peonblanco[b].casy:
+		elif (casillax,casillay) == (peonblanco[b].casx,peonblanco[b].casy):
 			return peonblanco[b]
 	for c in (1,2):
-		if casillax == caballonegro[c].casx and casillay == caballonegro[c].casy:
+		if (casillax,casillay) == (caballonegro[c].casx,caballonegro[c].casy):
 			return caballonegro[c]
-		elif casillax == caballoblanco[c].casx and casillay == caballoblanco[c].casy:
+		elif (casillax,casillay) == (caballoblanco[c].casx,caballoblanco[c].casy):
 			return caballoblanco[c]
-		elif casillax == torrenegra[c].casx and casillay == torrenegra[c].casy:
+		elif (casillax,casillay) == (torrenegra[c].casx,torrenegra[c].casy):
 			return torrenegra[c]
-		elif casillax == torreblanca[c].casx and casillay == torreblanca[c].casy:
+		elif (casillax,casillay) == (torreblanca[c].casx,torreblanca[c].casy):
 			return torreblanca[c]
-		elif casillax == alfilnegro[c].casx and casillay == alfilnegro[c].casy:
+		elif (casillax,casillay) == (alfilnegro[c].casx,alfilnegro[c].casy):
 			return alfilnegro[c]
-		elif casillax == alfilblanco[c].casx and casillay == alfilblanco[c].casy:
+		elif (casillax,casillay) == (alfilblanco[c].casx,alfilblanco[c].casy):
 			return alfilblanco[c]
-	if casillax == reynegro.casx and casillay == reynegro.casy:
+	if (casillax,casillay) == (reynegro.casx,reynegro.casy):
 		return reynegro
-	elif casillax == reyblanco.casx and casillay == reyblanco.casy:
+	elif (casillax,casillay) == (reyblanco.casx,reyblanco.casy):
 		return reyblanco
-	elif casillax == reinanegra.casx and casillay == reinanegra.casy:
+	elif (casillax,casillay) == (reinanegra.casx,reinanegra.casy):
 		return reinanegra
-	elif casillax == reinablanca.casx and casillay == reinablanca.casy:
+	elif (casillax,casillay) == (reinablanca.casx,reinablanca.casy):
 		return reinablanca
 		
 def sacasilla(posraton):
