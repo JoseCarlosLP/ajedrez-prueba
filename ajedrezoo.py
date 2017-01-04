@@ -382,46 +382,13 @@ while True:
 		posraton = cliked[0]
 		casillax,casillay=sacasilla(posraton)
 		rey=0
-		for b in range(1,9):
-			if sacapieza(casillax,casillay) == peonegro[b] and turno == "negras":
-				posimov = peonegro[b].puedemovera()
-				fichamover=peonegro[b]
-			elif sacapieza(casillax,casillay) == peonblanco[b] and turno == "blancas":
-				posimov = peonblanco[b].puedemovera()
-				fichamover=peonblanco[b]
-		for c in (1,2):
-			if sacapieza(casillax,casillay) == caballonegro[c] and turno == "negras":
-				posimov = caballonegro[c].puedemovera()
-				fichamover=caballonegro[c]
-			elif sacapieza(casillax,casillay) == caballoblanco[c] and turno == "blancas":
-				posimov = caballoblanco[c].puedemovera()
-				fichamover=caballoblanco[c]
-			elif sacapieza(casillax,casillay) == torrenegra[c] and turno == "negras":
-				posimov = torrenegra[c].puedemovera()
-				fichamover=torrenegra[c]
-			elif sacapieza(casillax,casillay) == torreblanca[c] and turno == "blancas":
-				posimov = torreblanca[c].puedemovera()
-				fichamover=torreblanca[c]
-			elif sacapieza(casillax,casillay) == alfilnegro[c] and turno == "negras":
-				posimov = alfilnegro[c].puedemovera()
-				fichamover=alfilnegro[c]
-			elif sacapieza(casillax,casillay) == alfilblanco[c] and turno == "blancas":
-				posimov = alfilblanco[c].puedemovera()
-				fichamover=alfilblanco[c]
-		if sacapieza(casillax,casillay) == reynegro and turno == "negras":
-			posimov = reynegro.puedemovera()
-			fichamover=reynegro
+		fichamover=sacapieza(casillax,casillay)
+		if (fichamover.color == 1 and turno == "negras") or (fichamover.color == 2 and turno == "blancas"):
+			fichamover=""#anula movimientos del otro turno
+		else:
+			posimov = fichamover.puedemovera()
+		if fichamover == reynegro or fichamover == reyblanco:
 			rey=1
-		elif sacapieza(casillax,casillay) == reyblanco and turno == "blancas":
-			posimov = reyblanco.puedemovera()
-			fichamover=reyblanco
-			rey=1
-		elif sacapieza(casillax,casillay) == reinanegra and turno == "negras":
-			posimov = reinanegra.puedemovera()
-			fichamover=reinanegra
-		elif sacapieza(casillax,casillay) == reinablanca and turno == "blancas":
-			posimov = reinablanca.puedemovera()
-			fichamover=reinablanca
 		if fichamover=="":
 			cliked=[]
 
