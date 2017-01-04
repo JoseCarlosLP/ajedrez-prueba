@@ -183,47 +183,38 @@ class metaballo():
 						num += 1
 		return casposibles
 
-class creapeonegro(metapieza):
+class metapeon():
+	def movpeon(self):
+		casposibles=[]
+		lpeon=[0,-1,1,7,2,5,4]
+		if 0 < self.casy+lpeon[self.color] <= 8 and 0 < self.casx <= 8:
+			if ocupadas[self.casy+lpeon[self.color]][self.casx] < 1:	
+				casposibles.append((self.casx,self.casy+lpeon[self.color]))
+				if self.casy == lpeon[self.color+2] and ocupadas[lpeon[self.color+4]][self.casx] < 1:
+					casposibles.append((self.casx,lpeon[self.color+4]))
+		if 0 < self.casy+lpeon[self.color] <= 8 and 0 < self.casx+1 <= 8:
+			if ocupadas[self.casy+lpeon[self.color]][self.casx+1] == 3-self.color:
+				casposibles.append((self.casx+1,self.casy+lpeon[self.color]))
+		if 0 < self.casy+lpeon[self.color] <= 8 and 0 < self.casx-1 <= 8:
+			if ocupadas[self.casy+lpeon[self.color]][self.casx-1] == 3-self.color:
+				casposibles.append((self.casx-1,self.casy+lpeon[self.color]))
+		for casazul in casposibles:
+			visor.blit(puntoazul,(casilla[casazul[0]],casilla[casazul[1]]))
+		return casposibles
+			
+class creapeonegro(metapieza,metapeon):
 	def __init__(self,x,y=2):
 		self.foto = pygame.image.load('peonegro.png')
 		metapieza.__init__(self,x,y,2)
 	def puedemovera(self):
-		casposibles=[]
-		if 0 < self.casy+1 <= 8 and 0 < self.casx <= 8:
-			if ocupadas[self.casy+1][self.casx] < 1:	
-				casposibles.append((self.casx,self.casy+1))
-				if self.casy == 2 and ocupadas[4][self.casx] < 1:
-					casposibles.append((self.casx,self.casy+2))
-		if 0 < self.casy+1 <= 8 and 0 < self.casx+1 <= 8:
-			if ocupadas[self.casy+1][self.casx+1] == 1:
-				casposibles.append((self.casx+1,self.casy+1))
-		if 0 < self.casy+1 <= 8 and 0 < self.casx-1 <= 8:
-			if ocupadas[self.casy+1][self.casx-1] == 1:
-				casposibles.append((self.casx-1,self.casy+1))
-		for casazul in casposibles:
-			visor.blit(puntoazul,(casilla[casazul[0]],casilla[casazul[1]]))
-		return casposibles
+		return metapeon.movpeon(self)
 
-class creapeonblanco(metapieza):
+class creapeonblanco(metapieza,metapeon):
 	def __init__(self,x,y=7):
 		self.foto = pygame.image.load('peonblanco.png')
 		metapieza.__init__(self,x,y,1)
 	def puedemovera(self):
-		casposibles=[]
-		if 0 < self.casy-1 <= 8 and 0 < self.casx <= 8:
-			if ocupadas[self.casy-1][self.casx] < 1:	
-				casposibles.append((self.casx,self.casy-1))
-				if self.casy == 7 and ocupadas[5][self.casx] < 1:
-					casposibles.append((self.casx,self.casy-2))
-		if 0 < self.casy-1 <= 8 and 0 < self.casx+1 <= 8:
-			if ocupadas[self.casy-1][self.casx+1] == 2:
-				casposibles.append((self.casx+1,self.casy-1))
-		if 0 < self.casy-1 <= 8 and 0 < self.casx-1 <= 8:
-			if ocupadas[self.casy-1][self.casx-1] == 2:
-				casposibles.append((self.casx-1,self.casy-1))
-		for casazul in casposibles:
-			visor.blit(puntoazul,(casilla[casazul[0]],casilla[casazul[1]]))
-		return casposibles
+		return metapeon.movpeon(self)
 
 class creacaballonegro(metapieza,metaballo):
 	def __init__(self,x,y=1):
