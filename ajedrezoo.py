@@ -21,10 +21,6 @@ ocupadas=[
 [0,0,0,0,0,0,0,0,0]
 ]
 
-def desocupasilla(pieza):
-	caspada = pieza.casillaocupada()
-	ocupadas[caspada[0]][caspada[1]] = 0
-
 def ud7(num):
 	if num == 1:
 		return 2
@@ -32,11 +28,9 @@ def ud7(num):
 		return 7
 
 def comepieza(pieza):
-	desocupasilla(pieza)
 	pieza.cambiasilla(9,9)
 
 def muevepieza(pieza,ncasx,ncasy):
-	desocupasilla(pieza)
 	pieza.cambiasilla(ncasx,ncasy)
 
 def	sacapieza(casillax,casillay):
@@ -85,6 +79,7 @@ class metapieza():
 		if self.casx < 9 and self.casy < 9:
 			ocupadas[self.casy][self.casx] = self.color
 	def cambiasilla(self,x,y):
+		ocupadas[self.casy][self.casx] = 0
 		self.__init__(x,y)
 	def casillaocupada(self):
 		return self.casy,self.casx
@@ -330,6 +325,8 @@ class creareinablanca(metapieza):
 		return posimov
 			
 puntoazul = pygame.image.load('puntoazul.png')
+gblancas = pygame.image.load('gblancas.png')
+gnegras = pygame.image.load('gnegras.png')
 
 peonegro = [None]
 peonblanco = [None]
@@ -451,10 +448,8 @@ while True:
 	visor.blit(reinablanca.foto, (reinablanca.posx,reinablanca.posy))
 	
 	if reynegro.casx > 8:
-		gblancas = pygame.image.load('gblancas.png')
 		visor.blit(gblancas,(0,0))
 	elif reyblanco.casx > 8:
-		gnegras = pygame.image.load('gnegras.png')
 		visor.blit(gnegras,(0,0))
 
 	pygame.display.update()
