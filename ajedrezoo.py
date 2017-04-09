@@ -380,7 +380,7 @@ while True:
 		casillax,casillay=sacasilla(posraton)
 		rey=0
 		fichamover=sacapieza(casillax,casillay)
-		if (fichamover.color == 1 and turno == "negras") or (fichamover.color == 2 and turno == "blancas"):
+		if (fichamover == None) or (fichamover.color == 1 and turno == "negras") or (fichamover.color == 2 and turno == "blancas"):
 			fichamover=""#anula movimientos del otro turno
 		else:
 			posimov = fichamover.puedemovera()
