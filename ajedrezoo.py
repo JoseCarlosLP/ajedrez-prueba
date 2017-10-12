@@ -30,9 +30,6 @@ def ud7(num):
 def comepieza(pieza):
 	pieza.cambiasilla(9,9)
 
-def muevepieza(pieza,ncasx,ncasy):
-	pieza.cambiasilla(ncasx,ncasy)
-
 def	sacapieza(casillax,casillay):
 	for b in range(1,9):
 		if (casillax,casillay) == (peonegro[b].casx,peonegro[b].casy):
@@ -361,7 +358,7 @@ cliked=[]
 
 fichamover=""
 turno="blancas"
-print "empiezan las blancas"
+print ("empiezan las blancas")
 
 while True:
 	for evento in pygame.event.get():
@@ -396,7 +393,7 @@ while True:
 			if (nuevacasillax,nuevacasillay) in posimov:
 				if ocupadas[nuevacasillay][nuevacasillax] != 0:
 					comepieza(sacapieza(nuevacasillax,nuevacasillay))
-				muevepieza(fichamover,nuevacasillax,nuevacasillay)
+				fichamover.cambiasilla(nuevacasillax,nuevacasillay)
 				if fichamover.color == 1:
 					turno = "negras"
 				else:
@@ -411,19 +408,19 @@ while True:
 				if fichamover == reynegro:
 					if (nuevacasillax,nuevacasillay) in posimov[2]:
 						if largo == 0:
-							muevepieza(torrenegra[2],6,1)
+							torrenegra[2].cambiasilla(6,1)
 						else:
-							muevepieza(torrenegra[1],4,1)
-					muevepieza(reynegro,nuevacasillax,nuevacasillay)
+							torrenegra[1].cambiasilla(4,1)
+					reynegro.cambiasilla(nuevacasillax,nuevacasillay)
 					turno = "blancas"
 				
 				if fichamover == reyblanco:
 					if (nuevacasillax,nuevacasillay) in posimov[2]:
 						if largo == 0:
-							muevepieza(torreblanca[2],6,8)
+							torreblanca[2].cambiasilla(6,8)
 						else:
-							muevepieza(torreblanca[1],4,8)
-					muevepieza(reyblanco,nuevacasillax,nuevacasillay)
+							torreblanca[1].cambiasilla(4,8)
+					reyblanco.cambiasilla(nuevacasillax,nuevacasillay)
 					turno = "negras"
 
 	#refrescos y representaciones
