@@ -164,9 +164,8 @@ class metapieza():
 class metaballo():
 	def movcaballo(self):
 		casposibles=[]
-		listaprobar=[-2,-1,1,2]
 		num = 0
-		for x in listaprobar:
+		for x in [-2,-1,1,2]:
 			for y in [-(3-abs(x)),3-abs(x)]:#idea de papa + eficiente
 				if 0 < self.casy+y <= 8 and 0 < self.casx+x <= 8:
 					if ocupadas[self.casy+y][self.casx+x] == 0 or ocupadas[self.casy+y][self.casx+x] == 3-self.color:
@@ -193,7 +192,30 @@ class metapeon():
 		for casazul in casposibles:
 			visor.blit(puntoazul,(casilla[casazul[0]],casilla[casazul[1]]))
 		return casposibles
-			
+
+enroke = 0
+class metarey():
+	def movrey(self):
+		posimov=[]
+		posimov+=metapieza.movlineal(self,1)
+		posimov+=metapieza.movdiagonal(self,1)
+		casposibles=[]
+		global enroke
+		if self.casx == 5 and (self.casy == 1 and self.color == 2 or self.casy == 8 and self.color == 1):
+			if (sacapieza(8,1) == torrenegra[2] or sacapieza(8,8) == torreblanca[2]) and \
+			ocupadas[self.casy][self.casx+2] == 0 and ocupadas[self.casy][self.casx+1] == 0:
+				visor.blit(puntoazul,(casilla[self.casx+2],casilla[self.casy]))
+				casposibles.append((self.casx+2,self.casy))
+				enroke = 1
+			if (sacapieza(1,1) == torrenegra[1] or sacapieza(1,8) == torreblanca[1]) and \
+			ocupadas[self.casy][self.casx-3] == 0 and ocupadas[self.casy][self.casx-2] == 0 \
+			and ocupadas[self.casy][self.casx-1] == 0:
+				visor.blit(puntoazul,(casilla[self.casx-2],casilla[self.casy]))
+				casposibles.append((self.casx-2,self.casy))
+				enroke = 2
+		posimov+=casposibles
+		return posimov
+		
 class creapeonegro(metapieza,metapeon):
 	def __init__(self,x,y=2):
 		self.foto = pygame.image.load('peonegro.png')
@@ -249,57 +271,20 @@ class crealfilblanco(metapieza):
 		metapieza.__init__(self,x,y,1)
 	def puedemovera(self):
 		return metapieza.movdiagonal(self)
-
-largo = 2
-class creareynegro(metapieza):
+		
+class creareynegro(metapieza,metarey):
 	def __init__(self,x=5,y=1):
 		self.foto = pygame.image.load('reynegro.png')
 		metapieza.__init__(self,x,y,2)
 	def puedemovera(self):
-		posimov=[]
-		posimov.append(metapieza.movlineal(self,1))
-		posimov.append(metapieza.movdiagonal(self,1))
-		casposibles=[]
-		global largo
-		if self.casx == 5 and self.casy == 1:
-			if sacapieza(8,1) == torrenegra[2] and \
-			ocupadas[self.casy][self.casx+2] == 0 and ocupadas[self.casy][self.casx+1] == 0:
-				visor.blit(puntoazul,(casilla[self.casx+2],casilla[self.casy]))
-				casposibles.append((self.casx+2,self.casy)) 
-				largo = 0
-			if sacapieza(1,1) == torrenegra[1] and \
-			ocupadas[self.casy][self.casx-3] == 0 and ocupadas[self.casy][self.casx-2] == 0 \
-			and ocupadas[self.casy][self.casx-1] == 0:
-				visor.blit(puntoazul,(casilla[self.casx-2],casilla[self.casy]))
-				casposibles.append((self.casx-2,self.casy))
-				largo = 1 
-		posimov.append(casposibles)
-		return posimov
+		return metarey.movrey(self)
 
-class creareyblanco(metapieza):
+class creareyblanco(metapieza,metarey):
 	def __init__(self,x=5,y=8):
 		self.foto = pygame.image.load('reyblanco.png')
 		metapieza.__init__(self,x,y,1)
 	def puedemovera(self):
-		posimov=[]
-		posimov.append(metapieza.movlineal(self,1))
-		posimov.append(metapieza.movdiagonal(self,1))
-		casposibles=[]
-		global largo
-		if self.casx == 5 and self.casy == 8:
-			if sacapieza(8,8) == torreblanca[2] and \
-			ocupadas[self.casy][self.casx+2] == 0 and ocupadas[self.casy][self.casx+1] == 0:
-				visor.blit(puntoazul,(casilla[self.casx+2],casilla[self.casy]))
-				casposibles.append((self.casx+2,self.casy))
-				largo = 0
-			if sacapieza(1,8) == torreblanca[1] and \
-			ocupadas[self.casy][self.casx-3] == 0 and ocupadas[self.casy][self.casx-2] == 0 \
-			and ocupadas[self.casy][self.casx-1] == 0:
-				visor.blit(puntoazul,(casilla[self.casx-2],casilla[self.casy]))
-				casposibles.append((self.casx-2,self.casy))
-				largo = 1 
-		posimov.append(casposibles)
-		return posimov
+		return metarey.movrey(self)
 
 class creareinanegra(metapieza):
 	def __init__(self,x=4,y=1):
@@ -354,7 +339,7 @@ reinablanca = creareinablanca()
 
 tablero=pygame.image.load('tablero-ajedrez.png')
 
-cliked=[]
+click=[]
 
 fichamover=""
 turno="blancas"
@@ -366,62 +351,46 @@ while True:
 			pygame.quit()
 			sys.exit()
 		if evento.type == MOUSEBUTTONDOWN:
-			cliked.append(pygame.mouse.get_pos())
-			if len(cliked) > 1:
-				cliked[0] = cliked[1]
+			click.append(pygame.mouse.get_pos())
+			if len(click) > 1:
+				click[0] = click[1]
 
 	visor.blit(tablero,(0,0))
 
-	if len(cliked) == 1:#primer click
-		posraton = cliked[0]
+	if len(click) == 1:#primer click
+		posraton = click[0]
 		casillax,casillay=sacasilla(posraton)
-		rey=0
 		fichamover=sacapieza(casillax,casillay)
 		if (fichamover == None) or (fichamover.color == 1 and turno == "negras") or (fichamover.color == 2 and turno == "blancas"):
 			fichamover=""#anula movimientos del otro turno
 		else:
 			posimov = fichamover.puedemovera()
-		if fichamover == reynegro or fichamover == reyblanco:
-			rey=1
 		if fichamover=="":
-			cliked=[]
+			click=[]
 
-	if len(cliked) == 2:#segundo click
-		posraton = cliked[0]
+	if len(click) == 2:#segundo click
+		posraton = click[0]
 		nuevacasillax,nuevacasillay = sacasilla(posraton)
-		if rey == 0:
-			if (nuevacasillax,nuevacasillay) in posimov:
-				if ocupadas[nuevacasillay][nuevacasillax] != 0:
-					comepieza(sacapieza(nuevacasillax,nuevacasillay))
-				fichamover.cambiasilla(nuevacasillax,nuevacasillay)
-				if fichamover.color == 1:
-					turno = "negras"
-				else:
-					turno = "blancas"
-		else:
-			if (nuevacasillax,nuevacasillay) in posimov[0] or \
-			(nuevacasillax,nuevacasillay) in posimov[1] or \
-			(nuevacasillax,nuevacasillay) in posimov[2]:
-				if ocupadas[nuevacasillay][nuevacasillax] != 0:
-					comepieza(sacapieza(nuevacasillax,nuevacasillay))
-				
+		if (nuevacasillax,nuevacasillay) in posimov:
+			if ocupadas[nuevacasillay][nuevacasillax] != 0:
+				comepieza(sacapieza(nuevacasillax,nuevacasillay))
+			fichamover.cambiasilla(nuevacasillax,nuevacasillay)
+			if fichamover == reynegro or fichamover == reyblanco:
 				if fichamover == reynegro:
-					if (nuevacasillax,nuevacasillay) in posimov[2]:
-						if largo == 0:
-							torrenegra[2].cambiasilla(6,1)
-						else:
-							torrenegra[1].cambiasilla(4,1)
-					reynegro.cambiasilla(nuevacasillax,nuevacasillay)
-					turno = "blancas"
-				
+					if enroke == 1 and (nuevacasillax,nuevacasillay) == (7,1):
+						torrenegra[2].cambiasilla(6,1)
+					if enroke == 2 and (nuevacasillax,nuevacasillay) == (3,1) :
+						torrenegra[1].cambiasilla(4,1)
 				if fichamover == reyblanco:
-					if (nuevacasillax,nuevacasillay) in posimov[2]:
-						if largo == 0:
-							torreblanca[2].cambiasilla(6,8)
-						else:
-							torreblanca[1].cambiasilla(4,8)
-					reyblanco.cambiasilla(nuevacasillax,nuevacasillay)
-					turno = "negras"
+					if enroke == 1 and (nuevacasillax,nuevacasillay) == (7,8):
+						torreblanca[2].cambiasilla(6,8)
+					if enroke == 2 and (nuevacasillax,nuevacasillay) == (3,8):
+						torreblanca[1].cambiasilla(4,8)
+				enroke = 0
+			if fichamover.color == 1:
+				turno = "negras"
+			else:
+				turno = "blancas"
 
 	#refrescos y representaciones
 	for d in range(1,9):
@@ -450,8 +419,8 @@ while True:
 		visor.blit(gnegras,(0,0))
 
 	pygame.display.update()
-	if len(cliked) > 1:
-		cliked=[]
+	if len(click) > 1:
+		click=[]
 		fichamover=""
 	
 	pygame.time.wait(20)#limita a 50 fps para ahorrar cpu
