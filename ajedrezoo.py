@@ -68,6 +68,7 @@ def sacasilla(posraton):
 
 class metapieza():
 	def __init__(self,x,y,color):
+		self.movida = 0
 		self.casx=x
 		self.casy=y
 		self.posx=casilla[x]
@@ -78,6 +79,7 @@ class metapieza():
 	def cambiasilla(self,x,y):
 		ocupadas[self.casy][self.casx] = 0
 		self.__init__(x,y)
+		self.movida = 1
 	def casillaocupada(self):
 		return self.casy,self.casx
 	def movlineal(self,movmax=8):
@@ -164,14 +166,12 @@ class metapieza():
 class metaballo():
 	def movcaballo(self):
 		casposibles=[]
-		num = 0
 		for x in [-2,-1,1,2]:
-			for y in [-(3-abs(x)),3-abs(x)]:#idea de papa + eficiente
+			for y in [-(3-abs(x)),3-abs(x)]:
 				if 0 < self.casy+y <= 8 and 0 < self.casx+x <= 8:
 					if ocupadas[self.casy+y][self.casx+x] == 0 or ocupadas[self.casy+y][self.casx+x] == 3-self.color:
 						visor.blit(puntoazul,(casilla[self.casx+x],casilla[self.casy+y]))
 						casposibles.append((self.casx+x,self.casy+y))
-						num += 1
 		return casposibles
 
 class metapeon():
@@ -201,19 +201,19 @@ class metarey():
 		posimov+=metapieza.movdiagonal(self,1)
 		casposibles=[]
 		global enroke
-		if self.casx == 5 and (self.casy == 1 and self.color == 2 or self.casy == 8 and self.color == 1):
-			if (sacapieza(8,1) == torrenegra[2] or sacapieza(8,8) == torreblanca[2]) and \
+		if self.movida == 0:
+			if (torrenegra[2].movida == 0 or torreblanca[2].movida == 0) and \
 			ocupadas[self.casy][self.casx+2] == 0 and ocupadas[self.casy][self.casx+1] == 0:
 				visor.blit(puntoazul,(casilla[self.casx+2],casilla[self.casy]))
 				casposibles.append((self.casx+2,self.casy))
 				enroke = 1
-			if (sacapieza(1,1) == torrenegra[1] or sacapieza(1,8) == torreblanca[1]) and \
+			if (torrenegra[1].movida == 0 or torreblanca[1].movida == 0) and \
 			ocupadas[self.casy][self.casx-3] == 0 and ocupadas[self.casy][self.casx-2] == 0 \
 			and ocupadas[self.casy][self.casx-1] == 0:
 				visor.blit(puntoazul,(casilla[self.casx-2],casilla[self.casy]))
 				casposibles.append((self.casx-2,self.casy))
 				enroke = 2
-		posimov+=casposibles
+			posimov+=casposibles
 		return posimov
 		
 class creapeonegro(metapieza,metapeon):
