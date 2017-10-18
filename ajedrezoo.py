@@ -177,12 +177,12 @@ class metaballo():
 class metapeon():
 	def movpeon(self):
 		casposibles=[]
-		lpeon=[0,-1,1,7,2,5,4]
+		lpeon=[0,-1,1,5,4]
 		if 0 < self.casy+lpeon[self.color] <= 8 and 0 < self.casx <= 8:
-			if ocupadas[self.casy+lpeon[self.color]][self.casx] < 1:	
+			if ocupadas[self.casy+lpeon[self.color]][self.casx] == 0:	
 				casposibles.append((self.casx,self.casy+lpeon[self.color]))
-				if self.casy == lpeon[self.color+2] and ocupadas[lpeon[self.color+4]][self.casx] < 1:
-					casposibles.append((self.casx,lpeon[self.color+4]))
+				if self.movida == 0 and ocupadas[lpeon[self.color+2]][self.casx] == 0:
+					casposibles.append((self.casx,lpeon[self.color+2]))
 		if 0 < self.casy+lpeon[self.color] <= 8 and 0 < self.casx+1 <= 8:
 			if ocupadas[self.casy+lpeon[self.color]][self.casx+1] == 3-self.color:
 				casposibles.append((self.casx+1,self.casy+lpeon[self.color]))
