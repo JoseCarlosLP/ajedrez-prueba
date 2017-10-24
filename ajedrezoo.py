@@ -3,7 +3,6 @@ import pygame, sys
 from pygame.locals import *
 
 pygame.init()
-
 visor = pygame.display.set_mode((560,560))
 pygame.display.set_caption("ajedrez")
 
@@ -141,7 +140,6 @@ class metaballo():
 						visor.blit(puntoazul,(casilla[self.casx+x],casilla[self.casy+y]))
 						casposibles.append((self.casx+x,self.casy+y))
 		return casposibles
-	
 
 class metapeon():
 	def movpeon(self):
@@ -367,7 +365,7 @@ while True:
 				if fichamover == reynegro:
 					if enroke == 1 and (nuevacasillax,nuevacasillay) == (7,1):
 						torrenegra[2].cambiasilla(6,1)
-					if enroke == 2 and (nuevacasillax,nuevacasillay) == (3,1) :
+					if enroke == 2 and (nuevacasillax,nuevacasillay) == (3,1):
 						torrenegra[1].cambiasilla(4,1)
 				if fichamover == reyblanco:
 					if enroke == 1 and (nuevacasillax,nuevacasillay) == (7,8):
