@@ -20,51 +20,17 @@ ocupadas=[
 [0,0,0,0,0,0,0,0,0],
 [0,0,0,0,0,0,0,0,0]
 ]
-
-def ud7(num):
-	if num == 1:
-		return 2
-	if num == 2:
-		return 7
-
-def comepieza(pieza):
-	pieza.cambiasilla(9,9)
-
-def	sacapieza(casillax,casillay):
-	for b in range(1,9):
-		if (casillax,casillay) == (peonegro[b].casx,peonegro[b].casy):
-			return peonegro[b]
-		elif (casillax,casillay) == (peonblanco[b].casx,peonblanco[b].casy):
-			return peonblanco[b]
-	for c in (1,2):
-		if (casillax,casillay) == (caballonegro[c].casx,caballonegro[c].casy):
-			return caballonegro[c]
-		elif (casillax,casillay) == (caballoblanco[c].casx,caballoblanco[c].casy):
-			return caballoblanco[c]
-		elif (casillax,casillay) == (torrenegra[c].casx,torrenegra[c].casy):
-			return torrenegra[c]
-		elif (casillax,casillay) == (torreblanca[c].casx,torreblanca[c].casy):
-			return torreblanca[c]
-		elif (casillax,casillay) == (alfilnegro[c].casx,alfilnegro[c].casy):
-			return alfilnegro[c]
-		elif (casillax,casillay) == (alfilblanco[c].casx,alfilblanco[c].casy):
-			return alfilblanco[c]
-	if (casillax,casillay) == (reynegro.casx,reynegro.casy):
-		return reynegro
-	elif (casillax,casillay) == (reyblanco.casx,reyblanco.casy):
-		return reyblanco
-	elif (casillax,casillay) == (reinanegra.casx,reinanegra.casy):
-		return reinanegra
-	elif (casillax,casillay) == (reinablanca.casx,reinablanca.casy):
-		return reinablanca
-		
-def sacasilla(posraton):
-	for i in range(9):
-		if casilla[i] < posraton[0] <= casilla[i+1]:
-			x = i
-		if casilla[i] < posraton[1] <= casilla[i+1]:
-			y = i
-	return x,y
+cocupadas=[#color de las ocupadas
+[0,0,0,0,0,0,0,0,0],#esta linia y el 0 de mas es para kitar el 0 de los indices
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0]
+]
 
 class metapieza():
 	def __init__(self,x,y,color):
@@ -75,9 +41,10 @@ class metapieza():
 		self.posy=casilla[y]
 		self.color=color
 		if self.casx < 9 and self.casy < 9:
-			ocupadas[self.casy][self.casx] = self.color
+			ocupadas[self.casy][self.casx] = self
+			cocupadas[self.casy][self.casx] = self.color
 	def cambiasilla(self,x,y):
-		ocupadas[self.casy][self.casx] = 0
+		ocupadas[self.casy][self.casx]=cocupadas[self.casy][self.casx] = 0
 		self.__init__(x,y)
 		self.movida = 1
 	def casillaocupada(self):
@@ -92,32 +59,32 @@ class metapieza():
 		while casi < movmax:
 			casi+=1
 			if 0 < self.casy <= 8 and 0 < self.casx-casi <= 8 and oriz == 1:		
-				if ocupadas[self.casy][self.casx-casi] == self.color:
+				if cocupadas[self.casy][self.casx-casi] == self.color:
 					oriz = 0
 				else:
 					casposibles.append((self.casx-casi,self.casy))
-					if ocupadas[self.casy][self.casx-casi] == 3-self.color:
+					if cocupadas[self.casy][self.casx-casi] == 3-self.color:
 						oriz = 0	
 			if 0 < self.casy <= 8 and 0 < self.casx+casi <= 8 and ordr == 1:		
-				if ocupadas[self.casy][self.casx+casi] == self.color:
+				if cocupadas[self.casy][self.casx+casi] == self.color:
 					ordr = 0
 				else:
 					casposibles.append((self.casx+casi,self.casy))
-					if ocupadas[self.casy][self.casx+casi] == 3-self.color:
+					if cocupadas[self.casy][self.casx+casi] == 3-self.color:
 						ordr = 0					
 			if 0 < self.casy-casi <= 8 and 0 < self.casx <= 8 and vrab == 1:		
-				if ocupadas[self.casy-casi][self.casx] == self.color:
+				if cocupadas[self.casy-casi][self.casx] == self.color:
 					vrab = 0
 				else:
 					casposibles.append((self.casx,self.casy-casi))
-					if ocupadas[self.casy-casi][self.casx] == 3-self.color:
+					if cocupadas[self.casy-casi][self.casx] == 3-self.color:
 						vrab = 0	
 			if 0 < self.casy+casi <= 8 and 0 < self.casx <= 8 and vrar == 1:		
-				if ocupadas[self.casy+casi][self.casx] == self.color:
+				if cocupadas[self.casy+casi][self.casx] == self.color:
 					vrar = 0
 				else:
 					casposibles.append((self.casx,self.casy+casi))
-					if ocupadas[self.casy+casi][self.casx] == 3-self.color:
+					if cocupadas[self.casy+casi][self.casx] == 3-self.color:
 						vrar = 0
 		for casazul in casposibles:
 			visor.blit(puntoazul,(casilla[casazul[0]],casilla[casazul[1]]))
@@ -132,32 +99,32 @@ class metapieza():
 		while casi < movmax:
 			casi+=1
 			if 0 < self.casy-casi <= 8 and 0 < self.casx-casi <= 8 and ariz == 1:		
-				if ocupadas[self.casy-casi][self.casx-casi] == self.color:
+				if cocupadas[self.casy-casi][self.casx-casi] == self.color:
 					ariz = 0
 				else:
 					casposibles.append((self.casx-casi,self.casy-casi))
-					if ocupadas[self.casy-casi][self.casx-casi] == 3-self.color:
+					if cocupadas[self.casy-casi][self.casx-casi] == 3-self.color:
 						ariz = 0	
 			if 0 < self.casy+casi <= 8 and 0 < self.casx+casi <= 8 and abdr == 1:		
-				if ocupadas[self.casy+casi][self.casx+casi] == self.color:
+				if cocupadas[self.casy+casi][self.casx+casi] == self.color:
 					abdr = 0
 				else:
 					casposibles.append((self.casx+casi,self.casy+casi))
-					if ocupadas[self.casy+casi][self.casx+casi] == 3-self.color:
+					if cocupadas[self.casy+casi][self.casx+casi] == 3-self.color:
 						abdr = 0	
 			if 0 < self.casy-casi <= 8 and 0 < self.casx+casi <= 8 and ardr == 1:		
-				if ocupadas[self.casy-casi][self.casx+casi] == self.color:
+				if cocupadas[self.casy-casi][self.casx+casi] == self.color:
 					ardr = 0
 				else:
 					casposibles.append((self.casx+casi,self.casy-casi))
-					if ocupadas[self.casy-casi][self.casx+casi] == 3-self.color:
+					if cocupadas[self.casy-casi][self.casx+casi] == 3-self.color:
 						ardr = 0	
 			if 0 < self.casy+casi <= 8 and 0 < self.casx-casi <= 8 and abiz == 1:		
-				if ocupadas[self.casy+casi][self.casx-casi] == self.color:
+				if cocupadas[self.casy+casi][self.casx-casi] == self.color:
 					abiz = 0
 				else:
 					casposibles.append((self.casx-casi,self.casy+casi))
-					if ocupadas[self.casy+casi][self.casx-casi] == 3-self.color:
+					if cocupadas[self.casy+casi][self.casx-casi] == 3-self.color:
 						abiz = 0
 		for casazul in casposibles:
 			visor.blit(puntoazul,(casilla[casazul[0]],casilla[casazul[1]]))
@@ -169,25 +136,27 @@ class metaballo():
 		for x in [-2,-1,1,2]:
 			for y in [-(3-abs(x)),3-abs(x)]:
 				if 0 < self.casy+y <= 8 and 0 < self.casx+x <= 8:
-					if ocupadas[self.casy+y][self.casx+x] == 0 or ocupadas[self.casy+y][self.casx+x] == 3-self.color:
+					if cocupadas[self.casy+y][self.casx+x] == 0 or \
+					cocupadas[self.casy+y][self.casx+x] == 3-self.color:
 						visor.blit(puntoazul,(casilla[self.casx+x],casilla[self.casy+y]))
 						casposibles.append((self.casx+x,self.casy+y))
 		return casposibles
+	
 
 class metapeon():
 	def movpeon(self):
 		casposibles=[]
 		lpeon=[0,-1,1,5,4]
 		if 0 < self.casy+lpeon[self.color] <= 8 and 0 < self.casx <= 8:
-			if ocupadas[self.casy+lpeon[self.color]][self.casx] == 0:	
+			if cocupadas[self.casy+lpeon[self.color]][self.casx] == 0:	
 				casposibles.append((self.casx,self.casy+lpeon[self.color]))
-				if self.movida == 0 and ocupadas[lpeon[self.color+2]][self.casx] == 0:
+				if self.movida == 0 and cocupadas[lpeon[self.color+2]][self.casx] == 0:
 					casposibles.append((self.casx,lpeon[self.color+2]))
 		if 0 < self.casy+lpeon[self.color] <= 8 and 0 < self.casx+1 <= 8:
-			if ocupadas[self.casy+lpeon[self.color]][self.casx+1] == 3-self.color:
+			if cocupadas[self.casy+lpeon[self.color]][self.casx+1] == 3-self.color:
 				casposibles.append((self.casx+1,self.casy+lpeon[self.color]))
 		if 0 < self.casy+lpeon[self.color] <= 8 and 0 < self.casx-1 <= 8:
-			if ocupadas[self.casy+lpeon[self.color]][self.casx-1] == 3-self.color:
+			if cocupadas[self.casy+lpeon[self.color]][self.casx-1] == 3-self.color:
 				casposibles.append((self.casx-1,self.casy+lpeon[self.color]))
 		for casazul in casposibles:
 			visor.blit(puntoazul,(casilla[casazul[0]],casilla[casazul[1]]))
@@ -203,13 +172,13 @@ class metarey():
 		global enroke
 		if self.movida == 0:
 			if (torrenegra[2].movida == 0 or torreblanca[2].movida == 0) and \
-			ocupadas[self.casy][self.casx+2] == 0 and ocupadas[self.casy][self.casx+1] == 0:
+			cocupadas[self.casy][self.casx+2] == 0 and cocupadas[self.casy][self.casx+1] == 0:
 				visor.blit(puntoazul,(casilla[self.casx+2],casilla[self.casy]))
 				casposibles.append((self.casx+2,self.casy))
 				enroke = 1
 			if (torrenegra[1].movida == 0 or torreblanca[1].movida == 0) and \
-			ocupadas[self.casy][self.casx-3] == 0 and ocupadas[self.casy][self.casx-2] == 0 \
-			and ocupadas[self.casy][self.casx-1] == 0:
+			cocupadas[self.casy][self.casx-3] == 0 and cocupadas[self.casy][self.casx-2] == 0 \
+			and cocupadas[self.casy][self.casx-1] == 0:
 				visor.blit(puntoazul,(casilla[self.casx-2],casilla[self.casy]))
 				casposibles.append((self.casx-2,self.casy))
 				enroke = 2
@@ -305,19 +274,40 @@ class creareinablanca(metapieza):
 		posimov+=metapieza.movlineal(self)
 		posimov+=metapieza.movdiagonal(self)
 		return posimov
-			
+
+def ud7(num):
+	if num == 1:
+		return 2
+	if num == 2:
+		return 7
+
+def comepieza(pieza):
+	pieza.cambiasilla(9,9)
+
+def	sacapieza(casx,casy):
+	return ocupadas[casy][casx]
+		
+def sacasilla(posraton):
+	for i in range(9):
+		if casilla[i] < posraton[0] <= casilla[i+1]:
+			x = i
+		if casilla[i] < posraton[1] <= casilla[i+1]:
+			y = i
+	return x,y
+
+tablero = pygame.image.load('tablero-ajedrez.png')			
 puntoazul = pygame.image.load('puntoazul.png')
 gblancas = pygame.image.load('gblancas.png')
 gnegras = pygame.image.load('gnegras.png')
 
-peonegro = [None]
-peonblanco = [None]
-caballonegro = [None]
-caballoblanco = [None]
-torrenegra = [None]
-torreblanca = [None]
-alfilnegro = [None]
-alfilblanco = [None]
+peonegro = [0]
+peonblanco = [0]
+caballonegro = [0]
+caballoblanco = [0]
+torrenegra = [0]
+torreblanca = [0]
+alfilnegro = [0]
+alfilblanco = [0]
 
 for p in range(1,9):#1-8
 	peonegro.append(creapeonegro(p))
@@ -336,8 +326,6 @@ reyblanco = creareyblanco()
 
 reinanegra = creareinanegra()
 reinablanca = creareinablanca()
-
-tablero=pygame.image.load('tablero-ajedrez.png')
 
 click=[]
 
@@ -361,7 +349,7 @@ while True:
 		posraton = click[0]
 		casillax,casillay=sacasilla(posraton)
 		fichamover=sacapieza(casillax,casillay)
-		if (fichamover == None) or (fichamover.color == 1 and turno == "negras") or (fichamover.color == 2 and turno == "blancas"):
+		if (fichamover == 0) or (fichamover.color == 1 and turno == "negras") or (fichamover.color == 2 and turno == "blancas"):
 			fichamover=""#anula movimientos del otro turno
 		else:
 			posimov = fichamover.puedemovera()
