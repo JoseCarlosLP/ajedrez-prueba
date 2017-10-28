@@ -39,6 +39,7 @@ class metapieza():
 		self.posx=casilla[x]
 		self.posy=casilla[y]
 		self.color=color
+		self.casposibles=[]
 		if self.casx < 9 and self.casy < 9:
 			ocupadas[self.casy][self.casx] = self
 			cocupadas[self.casy][self.casx] = self.color
@@ -50,128 +51,118 @@ class metapieza():
 		return self.casy,self.casx
 	def movlineal(self,movmax=8):
 		casi = 0
-		oriz = 1
-		ordr = 1
-		vrar = 1
-		vrab = 1
-		casposibles=[]
+		oriz = ordr = vrar = vrab = 1
 		while casi < movmax:
 			casi+=1
-			if 0 < self.casy <= 8 and 0 < self.casx-casi <= 8 and oriz == 1:		
+			if 0 < self.casy <= 8 and 0 < self.casx-casi <= 8 and oriz == 1:
 				if cocupadas[self.casy][self.casx-casi] == self.color:
 					oriz = 0
 				else:
-					casposibles.append((self.casx-casi,self.casy))
+					self.casposibles.append((self.casx-casi,self.casy))
 					if cocupadas[self.casy][self.casx-casi] == 3-self.color:
 						oriz = 0	
 			if 0 < self.casy <= 8 and 0 < self.casx+casi <= 8 and ordr == 1:		
 				if cocupadas[self.casy][self.casx+casi] == self.color:
 					ordr = 0
 				else:
-					casposibles.append((self.casx+casi,self.casy))
+					self.casposibles.append((self.casx+casi,self.casy))
 					if cocupadas[self.casy][self.casx+casi] == 3-self.color:
 						ordr = 0					
 			if 0 < self.casy-casi <= 8 and 0 < self.casx <= 8 and vrab == 1:		
 				if cocupadas[self.casy-casi][self.casx] == self.color:
 					vrab = 0
 				else:
-					casposibles.append((self.casx,self.casy-casi))
+					self.casposibles.append((self.casx,self.casy-casi))
 					if cocupadas[self.casy-casi][self.casx] == 3-self.color:
 						vrab = 0	
 			if 0 < self.casy+casi <= 8 and 0 < self.casx <= 8 and vrar == 1:		
 				if cocupadas[self.casy+casi][self.casx] == self.color:
 					vrar = 0
 				else:
-					casposibles.append((self.casx,self.casy+casi))
+					self.casposibles.append((self.casx,self.casy+casi))
 					if cocupadas[self.casy+casi][self.casx] == 3-self.color:
 						vrar = 0
-		return casposibles
+		return self.casposibles
+		
 	def movdiagonal(self,movmax=8):
 		casi = 0
-		ariz = 1
-		abdr = 1
-		ardr = 1
-		abiz = 1
-		casposibles=[]
+		ariz = abdr = ardr = abiz = 1
 		while casi < movmax:
 			casi+=1
 			if 0 < self.casy-casi <= 8 and 0 < self.casx-casi <= 8 and ariz == 1:		
 				if cocupadas[self.casy-casi][self.casx-casi] == self.color:
 					ariz = 0
 				else:
-					casposibles.append((self.casx-casi,self.casy-casi))
+					self.casposibles.append((self.casx-casi,self.casy-casi))
 					if cocupadas[self.casy-casi][self.casx-casi] == 3-self.color:
 						ariz = 0	
 			if 0 < self.casy+casi <= 8 and 0 < self.casx+casi <= 8 and abdr == 1:		
 				if cocupadas[self.casy+casi][self.casx+casi] == self.color:
 					abdr = 0
 				else:
-					casposibles.append((self.casx+casi,self.casy+casi))
+					self.casposibles.append((self.casx+casi,self.casy+casi))
 					if cocupadas[self.casy+casi][self.casx+casi] == 3-self.color:
 						abdr = 0	
 			if 0 < self.casy-casi <= 8 and 0 < self.casx+casi <= 8 and ardr == 1:		
 				if cocupadas[self.casy-casi][self.casx+casi] == self.color:
 					ardr = 0
 				else:
-					casposibles.append((self.casx+casi,self.casy-casi))
+					self.casposibles.append((self.casx+casi,self.casy-casi))
 					if cocupadas[self.casy-casi][self.casx+casi] == 3-self.color:
 						ardr = 0	
 			if 0 < self.casy+casi <= 8 and 0 < self.casx-casi <= 8 and abiz == 1:		
 				if cocupadas[self.casy+casi][self.casx-casi] == self.color:
 					abiz = 0
 				else:
-					casposibles.append((self.casx-casi,self.casy+casi))
+					self.casposibles.append((self.casx-casi,self.casy+casi))
 					if cocupadas[self.casy+casi][self.casx-casi] == 3-self.color:
 						abiz = 0
-		return casposibles
+		return self.casposibles
 
-class metaballo():
+class metaballo(metapieza):
 	def movcaballo(self):
-		casposibles=[]
 		for x in [-2,-1,1,2]:
 			for y in [-(3-abs(x)),3-abs(x)]:
 				if 0 < self.casy+y <= 8 and 0 < self.casx+x <= 8:
 					if cocupadas[self.casy+y][self.casx+x] == 0 or \
 					cocupadas[self.casy+y][self.casx+x] == 3-self.color:
-						casposibles.append((self.casx+x,self.casy+y))
-		return casposibles
+						self.casposibles.append((self.casx+x,self.casy+y))
+		return self.casposibles
 
-class metapeon():
+class metapeon(metapieza):
 	def movpeon(self):
-		casposibles=[]
 		lpeon=[0,-1,1,5,4]
 		if 0 < self.casy+lpeon[self.color] <= 8 and 0 < self.casx <= 8:
 			if cocupadas[self.casy+lpeon[self.color]][self.casx] == 0:	
-				casposibles.append((self.casx,self.casy+lpeon[self.color]))
+				self.casposibles.append((self.casx,self.casy+lpeon[self.color]))
 				if self.movida == 0 and cocupadas[lpeon[self.color+2]][self.casx] == 0:
-					casposibles.append((self.casx,lpeon[self.color+2]))
+					self.casposibles.append((self.casx,lpeon[self.color+2]))
 		if 0 < self.casy+lpeon[self.color] <= 8 and 0 < self.casx+1 <= 8:
 			if cocupadas[self.casy+lpeon[self.color]][self.casx+1] == 3-self.color:
-				casposibles.append((self.casx+1,self.casy+lpeon[self.color]))
+				self.casposibles.append((self.casx+1,self.casy+lpeon[self.color]))
 		if 0 < self.casy+lpeon[self.color] <= 8 and 0 < self.casx-1 <= 8:
 			if cocupadas[self.casy+lpeon[self.color]][self.casx-1] == 3-self.color:
-				casposibles.append((self.casx-1,self.casy+lpeon[self.color]))
-		return casposibles
+				self.casposibles.append((self.casx-1,self.casy+lpeon[self.color]))
+		return self.casposibles
 
 enroke = 0
-class metarey():
+class metarey(metapieza):
 	def movrey(self):
 		posimov=[]
 		posimov+=metapieza.movlineal(self,1)
 		posimov+=metapieza.movdiagonal(self,1)
-		casposibles=[]
 		global enroke
 		if self.movida == 0:
 			if (torrenegra[2].movida == 0 or torreblanca[2].movida == 0) and \
 			cocupadas[self.casy][self.casx+2] == 0 and cocupadas[self.casy][self.casx+1] == 0:
-				casposibles.append((self.casx+2,self.casy))
+				self.casposibles.append((self.casx+2,self.casy))
 				enroke = 1
 			if (torrenegra[1].movida == 0 or torreblanca[1].movida == 0) and \
 			cocupadas[self.casy][self.casx-3] == 0 and cocupadas[self.casy][self.casx-2] == 0 \
 			and cocupadas[self.casy][self.casx-1] == 0:
-				casposibles.append((self.casx-2,self.casy))
+				self.casposibles.append((self.casx-2,self.casy))
 				enroke = 2
-			posimov+=casposibles
+			posimov+=self.casposibles
 		return posimov
 		
 class Peonegro(metapieza,metapeon):
