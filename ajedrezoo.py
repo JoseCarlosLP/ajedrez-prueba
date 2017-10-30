@@ -148,28 +148,28 @@ class metarey(metapieza):
 			posimov+=self.casposibles
 		return posimov
 		
-class Peonegro(metapieza,metapeon):
+class Peonegro(metapeon):
 	def __init__(self,x,y=2):
 		self.foto = pygame.image.load('peonegro.png')
 		metapieza.__init__(self,x,y,2)
 	def puedemovera(self):
 		return metapeon.movpeon(self)
 
-class Peonblanco(metapieza,metapeon):
+class Peonblanco(metapeon):
 	def __init__(self,x,y=7):
 		self.foto = pygame.image.load('peonblanco.png')
 		metapieza.__init__(self,x,y,1)
 	def puedemovera(self):
 		return metapeon.movpeon(self)
 
-class Caballonegro(metapieza,metaballo):
+class Caballonegro(metaballo):
 	def __init__(self,x,y=1):
 		self.foto = pygame.image.load('caballonegro.png')
 		metapieza.__init__(self,x,y,2)
 	def puedemovera(self):
 		return metaballo.movcaballo(self)
 
-class Caballoblanco(metapieza,metaballo):
+class Caballoblanco(metaballo):
 	def __init__(self,x,y=8):
 		self.foto = pygame.image.load('caballoblanco.png')
 		metapieza.__init__(self,x,y,1)
@@ -204,14 +204,14 @@ class Alfilblanco(metapieza):
 	def puedemovera(self):
 		return metapieza.movdiagonal(self)
 		
-class Reynegro(metapieza,metarey):
+class Reynegro(metarey):
 	def __init__(self,x=5,y=1):
 		self.foto = pygame.image.load('reynegro.png')
 		metapieza.__init__(self,x,y,2)
 	def puedemovera(self):
 		return metarey.movrey(self)
 
-class Reyblanco(metapieza,metarey):
+class Reyblanco(metarey):
 	def __init__(self,x=5,y=8):
 		self.foto = pygame.image.load('reyblanco.png')
 		metapieza.__init__(self,x,y,1)
