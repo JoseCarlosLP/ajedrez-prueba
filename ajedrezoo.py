@@ -36,8 +36,7 @@ class metapieza():
 		self.movida = 0
 		self.casx=x
 		self.casy=y
-		self.posx=casilla[x]
-		self.posy=casilla[y]
+		self.pos=(casilla[x],casilla[y])
 		self.color=color
 		self.casposibles=[]
 		if self.casx < 9 and self.casy < 9:
@@ -342,24 +341,24 @@ while True:
 	#refrescos y representaciones
 	if reynegro.casx < 9 and reyblanco.casx < 9:
 		for d in range(1,9):
-			visor.blit(peonblanco[d].foto,(peonblanco[d].posx,peonblanco[d].posy))
-			visor.blit(peonegro[d].foto,(peonegro[d].posx,peonegro[d].posy))
+			visor.blit(peonblanco[d].foto,peonblanco[d].pos)
+			visor.blit(peonegro[d].foto,peonegro[d].pos)
 			
 		for e in (1,2):
-			visor.blit(torrenegra[e].foto,(torrenegra[e].posx,torrenegra[e].posy))
-			visor.blit(torreblanca[e].foto,(torreblanca[e].posx,torreblanca[e].posy))
+			visor.blit(torrenegra[e].foto,torrenegra[e].pos)
+			visor.blit(torreblanca[e].foto,torreblanca[e].pos)
 			
-			visor.blit(alfilnegro[e].foto,(alfilnegro[e].posx,alfilnegro[e].posy))
-			visor.blit(alfilblanco[e].foto,(alfilblanco[e].posx,alfilblanco[e].posy))
+			visor.blit(alfilnegro[e].foto,alfilnegro[e].pos)
+			visor.blit(alfilblanco[e].foto,alfilblanco[e].pos)
 			
-			visor.blit(caballoblanco[e].foto,(caballoblanco[e].posx,caballoblanco[e].posy))
-			visor.blit(caballonegro[e].foto,(caballonegro[e].posx,caballonegro[e].posy))
+			visor.blit(caballoblanco[e].foto,caballoblanco[e].pos)
+			visor.blit(caballonegro[e].foto,caballonegro[e].pos)
 		
-		visor.blit(reynegro.foto,(reynegro.posx,reynegro.posy))
-		visor.blit(reyblanco.foto,(reyblanco.posx,reyblanco.posy))
+		visor.blit(reynegro.foto,reynegro.pos)
+		visor.blit(reyblanco.foto,reyblanco.pos)
 		
-		visor.blit(reinanegra.foto,(reinanegra.posx,reinanegra.posy))
-		visor.blit(reinablanca.foto,(reinablanca.posx,reinablanca.posy))
+		visor.blit(reinanegra.foto,reinanegra.pos)
+		visor.blit(reinablanca.foto,reinablanca.pos)
 	
 	if len(click) > 1:
 		click=[]
