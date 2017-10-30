@@ -51,72 +51,56 @@ class metapieza():
 		return self.casy,self.casx
 	def movlineal(self,movmax=8):
 		casi = 0
-		oriz = ordr = vrar = vrab = 1
+		oriz = ordr = vrab = vrar = True
 		while casi < movmax:
 			casi+=1
-			if 0 < self.casy <= 8 and 0 < self.casx-casi <= 8 and oriz == 1:
-				if cocupadas[self.casy][self.casx-casi] == self.color:
-					oriz = 0
-				else:
+			if 0 < self.casy <= 8 and 0 < self.casx-casi <= 8 and oriz:
+				oriz = cocupadas[self.casy][self.casx-casi] != self.color
+				if oriz:
 					self.casposibles.append((self.casx-casi,self.casy))
-					if cocupadas[self.casy][self.casx-casi] == 3-self.color:
-						oriz = 0	
-			if 0 < self.casy <= 8 and 0 < self.casx+casi <= 8 and ordr == 1:		
-				if cocupadas[self.casy][self.casx+casi] == self.color:
-					ordr = 0
-				else:
+					oriz = cocupadas[self.casy][self.casx-casi] != 3-self.color
+			if 0 < self.casy <= 8 and 0 < self.casx+casi <= 8 and ordr:
+				ordr = cocupadas[self.casy][self.casx+casi] != self.color
+				if ordr:
 					self.casposibles.append((self.casx+casi,self.casy))
-					if cocupadas[self.casy][self.casx+casi] == 3-self.color:
-						ordr = 0					
-			if 0 < self.casy-casi <= 8 and 0 < self.casx <= 8 and vrab == 1:		
-				if cocupadas[self.casy-casi][self.casx] == self.color:
-					vrab = 0
-				else:
+					ordr = cocupadas[self.casy][self.casx+casi] != 3-self.color				
+			if 0 < self.casy-casi <= 8 and 0 < self.casx <= 8 and vrab:		
+				vrab = cocupadas[self.casy-casi][self.casx] != self.color
+				if vrab:
 					self.casposibles.append((self.casx,self.casy-casi))
-					if cocupadas[self.casy-casi][self.casx] == 3-self.color:
-						vrab = 0	
-			if 0 < self.casy+casi <= 8 and 0 < self.casx <= 8 and vrar == 1:		
-				if cocupadas[self.casy+casi][self.casx] == self.color:
-					vrar = 0
-				else:
+					vrab = cocupadas[self.casy-casi][self.casx] != 3-self.color
+			if 0 < self.casy+casi <= 8 and 0 < self.casx <= 8 and vrar:		
+				vrar = cocupadas[self.casy+casi][self.casx] != self.color
+				if vrar:
 					self.casposibles.append((self.casx,self.casy+casi))
-					if cocupadas[self.casy+casi][self.casx] == 3-self.color:
-						vrar = 0
+					vrar = cocupadas[self.casy+casi][self.casx] != 3-self.color
 		return self.casposibles
 		
 	def movdiagonal(self,movmax=8):
 		casi = 0
-		ariz = abdr = ardr = abiz = 1
+		ariz = abdr = ardr = abiz = True
 		while casi < movmax:
 			casi+=1
-			if 0 < self.casy-casi <= 8 and 0 < self.casx-casi <= 8 and ariz == 1:		
-				if cocupadas[self.casy-casi][self.casx-casi] == self.color:
-					ariz = 0
-				else:
+			if 0 < self.casy-casi <= 8 and 0 < self.casx-casi <= 8 and ariz:		
+				ariz = cocupadas[self.casy-casi][self.casx-casi] != self.color
+				if ariz:
 					self.casposibles.append((self.casx-casi,self.casy-casi))
-					if cocupadas[self.casy-casi][self.casx-casi] == 3-self.color:
-						ariz = 0	
-			if 0 < self.casy+casi <= 8 and 0 < self.casx+casi <= 8 and abdr == 1:		
-				if cocupadas[self.casy+casi][self.casx+casi] == self.color:
-					abdr = 0
-				else:
+					ariz = cocupadas[self.casy-casi][self.casx-casi] != 3-self.color
+			if 0 < self.casy+casi <= 8 and 0 < self.casx+casi <= 8 and abdr:		
+				abdr = cocupadas[self.casy+casi][self.casx+casi] != self.color
+				if abdr:
 					self.casposibles.append((self.casx+casi,self.casy+casi))
-					if cocupadas[self.casy+casi][self.casx+casi] == 3-self.color:
-						abdr = 0	
-			if 0 < self.casy-casi <= 8 and 0 < self.casx+casi <= 8 and ardr == 1:		
-				if cocupadas[self.casy-casi][self.casx+casi] == self.color:
-					ardr = 0
-				else:
+					abdr = cocupadas[self.casy+casi][self.casx+casi] != 3-self.color
+			if 0 < self.casy-casi <= 8 and 0 < self.casx+casi <= 8 and ardr:		
+				ardr = cocupadas[self.casy-casi][self.casx+casi] != self.color
+				if ardr:
 					self.casposibles.append((self.casx+casi,self.casy-casi))
-					if cocupadas[self.casy-casi][self.casx+casi] == 3-self.color:
-						ardr = 0	
-			if 0 < self.casy+casi <= 8 and 0 < self.casx-casi <= 8 and abiz == 1:		
-				if cocupadas[self.casy+casi][self.casx-casi] == self.color:
-					abiz = 0
-				else:
+					ardr = cocupadas[self.casy-casi][self.casx+casi] != 3-self.color
+			if 0 < self.casy+casi <= 8 and 0 < self.casx-casi <= 8 and abiz:		
+				abiz = cocupadas[self.casy+casi][self.casx-casi] != self.color
+				if abiz:
 					self.casposibles.append((self.casx-casi,self.casy+casi))
-					if cocupadas[self.casy+casi][self.casx-casi] == 3-self.color:
-						abiz = 0
+					abiz = cocupadas[self.casy+casi][self.casx-casi] != 3-self.color
 		return self.casposibles
 
 class metaballo(metapieza):
@@ -255,12 +239,6 @@ class Reinablanca(metapieza):
 		posimov+=metapieza.movdiagonal(self)
 		return posimov
 
-def ud7(num):
-	if num == 1:
-		return 2
-	if num == 2:
-		return 7
-
 def comepieza(pieza):
 	pieza.cambiasilla(9,9)
 
@@ -274,6 +252,8 @@ def sacasilla(posraton):
 		if casilla[i] < posraton[1] <= casilla[i+1]:
 			y = i
 	return x,y
+
+ud7 = [0,2,7]
 
 tablero = pygame.image.load('tablero-ajedrez.png')			
 puntoazul = pygame.image.load('puntoazul.png')
@@ -294,8 +274,8 @@ for p in range(1,9):#1-8
 	peonblanco.append(Peonblanco(p))
 
 for c in (1,2):
-	caballonegro.append(Caballonegro(ud7(c)))
-	caballoblanco.append(Caballoblanco(ud7(c)))
+	caballonegro.append(Caballonegro(ud7[c]))
+	caballoblanco.append(Caballoblanco(ud7[c]))
 	torrenegra.append(Torrenegra(pow(c,3)))
 	torreblanca.append(Torreblanca(pow(c,3)))
 	alfilnegro.append(Alfilnegro(c*3))
