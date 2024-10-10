@@ -33,7 +33,7 @@ cocupadas = [  #color de las ocupadas
 
 
 class metapieza():
-    def __init__(self, x, y, color):
+    def metapieza___init__(self, x, y, color):
         self.movida = 0
         self.casx = x
         self.casy = y
@@ -44,15 +44,15 @@ class metapieza():
             ocupadas[self.casy][self.casx] = self
             cocupadas[self.casy][self.casx] = self.color
 
-    def cambiasilla(self, x, y):
+    def metapieza_cambiasilla(self, x, y):
         ocupadas[self.casy][self.casx] = cocupadas[self.casy][self.casx] = 0
         self.__init__(x, y)
         self.movida = 1
 
-    def casillaocupada(self):
+    def metapieza_casillaocupada(self):
         return self.casy, self.casx
 
-    def movlineal(self, movmax=8):
+    def metapieza_movlineal(self, movmax=8):
         casi = 0
         oriz = ordr = vrab = vrar = True
         while casi < movmax:
@@ -79,7 +79,7 @@ class metapieza():
                     vrar = cocupadas[self.casy + casi][self.casx] != 3 - self.color
         return self.casposibles
 
-    def movdiagonal(self, movmax=8):
+    def metapieza_movdiagonal(self, movmax=8):
         casi = 0
         ariz = abdr = ardr = abiz = True
         while casi < movmax:
@@ -108,7 +108,7 @@ class metapieza():
 
 
 class metaballo(metapieza):
-    def movcaballo(self):
+    def metaballo_movcaballo(self):
         for x in [-2, -1, 1, 2]:
             for y in [-(3 - abs(x)), 3 - abs(x)]:
                 if 0 < self.casy + y <= 8 and 0 < self.casx + x <= 8:
@@ -119,7 +119,7 @@ class metaballo(metapieza):
 
 
 class metapeon(metapieza):
-    def movpeon(self):
+    def metapeon_movpeon(self):
         lpeon = [0, -1, 1, 5, 4]
         if 0 < self.casy + lpeon[self.color] <= 8 and 0 < self.casx <= 8:
             if cocupadas[self.casy + lpeon[self.color]][self.casx] == 0:
@@ -139,7 +139,7 @@ enroke = 0
 
 
 class metarey(metapieza):
-    def movrey(self):
+    def metarey_movrey(self):
         posimov = []
         posimov += metapieza.movlineal(self, 1)
         posimov += metapieza.movdiagonal(self, 1)
@@ -159,101 +159,101 @@ class metarey(metapieza):
 
 
 class Peonegro(metapeon):
-    def __init__(self, x, y=2):
+    def Peonegro___init__(self, x, y=2):
         self.foto = pygame.image.load('peonegro.png')
         metapieza.__init__(self, x, y, 2)
 
-    def puedemovera(self):
+    def Peonegro_puedemovera(self):
         return metapeon.movpeon(self)
 
 
 class Peonblanco(metapeon):
-    def __init__(self, x, y=7):
+    def Peonblanco___init__(self, x, y=7):
         self.foto = pygame.image.load('peonblanco.png')
         metapieza.__init__(self, x, y, 1)
 
-    def puedemovera(self):
+    def Peonblanco_puedemovera(self):
         return metapeon.movpeon(self)
 
 
 class Caballonegro(metaballo):
-    def __init__(self, x, y=1):
+    def Caballonegro___init__(self, x, y=1):
         self.foto = pygame.image.load('caballonegro.png')
         metapieza.__init__(self, x, y, 2)
 
-    def puedemovera(self):
+    def Caballonegro_puedemovera(self):
         return metaballo.movcaballo(self)
 
 
 class Caballoblanco(metaballo):
-    def __init__(self, x, y=8):
+    def Caballoblanco___init__(self, x, y=8):
         self.foto = pygame.image.load('caballoblanco.png')
         metapieza.__init__(self, x, y, 1)
 
-    def puedemovera(self):
+    def Caballoblanco_puedemovera(self):
         return metaballo.movcaballo(self)
 
 
 class Torrenegra(metapieza):
-    def __init__(self, x, y=1):
+    def Torrenegra___init__(self, x, y=1):
         self.foto = pygame.image.load('torrenegra.png')
         metapieza.__init__(self, x, y, 2)
 
-    def puedemovera(self):
+    def Torrenegra_puedemovera(self):
         return metapieza.movlineal(self)
 
 
 class Torreblanca(metapieza):
-    def __init__(self, x, y=8):
+    def Torreblanca___init__(self, x, y=8):
         self.foto = pygame.image.load('torreblanca.png')
         metapieza.__init__(self, x, y, 1)
 
-    def puedemovera(self):
+    def Torreblanca_puedemovera(self):
         return metapieza.movlineal(self)
 
 
 class Alfilnegro(metapieza):
-    def __init__(self, x, y=1):
+    def Alfilnegro___init__(self, x, y=1):
         self.foto = pygame.image.load('alfilnegro.png')
         metapieza.__init__(self, x, y, 2)
 
-    def puedemovera(self):
+    def Alfilnegro_puedemovera(self):
         return metapieza.movdiagonal(self)
 
 
 class Alfilblanco(metapieza):
-    def __init__(self, x, y=8):
+    def Alfilblanco___init__(self, x, y=8):
         self.foto = pygame.image.load('alfilblanco.png')
         metapieza.__init__(self, x, y, 1)
 
-    def puedemovera(self):
+    def Alfilblanco_puedemovera(self):
         return metapieza.movdiagonal(self)
 
 
 class Reynegro(metarey):
-    def __init__(self, x=5, y=1):
+    def Reynegro___init__(self, x=5, y=1):
         self.foto = pygame.image.load('reynegro.png')
         metapieza.__init__(self, x, y, 2)
 
-    def puedemovera(self):
+    def Reynegro_puedemovera(self):
         return metarey.movrey(self)
 
 
 class Reyblanco(metarey):
-    def __init__(self, x=5, y=8):
+    def Reyblanco___init__(self, x=5, y=8):
         self.foto = pygame.image.load('reyblanco.png')
         metapieza.__init__(self, x, y, 1)
 
-    def puedemovera(self):
+    def Reyblanco_puedemovera(self):
         return metarey.movrey(self)
 
 
 class Reinanegra(metapieza):
-    def __init__(self, x=4, y=1):
+    def Reinanegra___init__(self, x=4, y=1):
         self.foto = pygame.image.load('reinanegra.png')
         metapieza.__init__(self, x, y, 2)
 
-    def puedemovera(self):
+    def Reinanegra_puedemovera(self):
         posimov = []
         posimov += metapieza.movlineal(self)
         posimov += metapieza.movdiagonal(self)
@@ -261,11 +261,11 @@ class Reinanegra(metapieza):
 
 
 class Reinablanca(metapieza):
-    def __init__(self, x=4, y=8):
+    def Reinablanca___init__(self, x=4, y=8):
         self.foto = pygame.image.load('reinablanca.png')
         metapieza.__init__(self, x, y, 1)
 
-    def puedemovera(self):
+    def Reinablanca_puedemovera(self):
         posimov = []
         posimov += metapieza.movlineal(self)
         posimov += metapieza.movdiagonal(self)
