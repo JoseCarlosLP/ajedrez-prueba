@@ -2,10 +2,6 @@
 import pygame, sys
 from pygame.locals import *
 
-pygame.init()
-visor = pygame.display.set_mode((560, 560))
-pygame.display.set_caption("ajedrez")
-
 casilla = [0, 0, 70, 140, 210, 280, 350, 420, 490, 560, 999]
 
 ocupadas = [
@@ -291,124 +287,129 @@ def sacasilla(posraton):
 
 ud7 = [0, 2, 7]
 
-tablero = pygame.image.load('tablero-ajedrez.png')
-puntoazul = pygame.image.load('puntoazul.png')
-gblancas = pygame.image.load('gblancas.png')
-gnegras = pygame.image.load('gnegras.png')
+if __name__ == "__main__":
+    pygame.init()
+    visor = pygame.display.set_mode((560, 560))
+    pygame.display.set_caption("ajedrez")
 
-peonegro = [0]
-peonblanco = [0]
-caballonegro = [0]
-caballoblanco = [0]
-torrenegra = [0]
-torreblanca = [0]
-alfilnegro = [0]
-alfilblanco = [0]
+    tablero = pygame.image.load('tablero-ajedrez.png')
+    puntoazul = pygame.image.load('puntoazul.png')
+    gblancas = pygame.image.load('gblancas.png')
+    gnegras = pygame.image.load('gnegras.png')
 
-for p in range(1, 9):  #1-8
-    peonegro.append(Peonegro(p))
-    peonblanco.append(Peonblanco(p))
+    peonegro = [0]
+    peonblanco = [0]
+    caballonegro = [0]
+    caballoblanco = [0]
+    torrenegra = [0]
+    torreblanca = [0]
+    alfilnegro = [0]
+    alfilblanco = [0]
 
-for c in (1, 2):
-    caballonegro.append(Caballonegro(ud7[c]))
-    caballoblanco.append(Caballoblanco(ud7[c]))
-    torrenegra.append(Torrenegra(pow(c, 3)))
-    torreblanca.append(Torreblanca(pow(c, 3)))
-    alfilnegro.append(Alfilnegro(c * 3))
-    alfilblanco.append(Alfilblanco(c * 3))
+    reynegro = Reynegro()
+    reyblanco = Reyblanco()
 
-reynegro = Reynegro()
-reyblanco = Reyblanco()
+    reinanegra = Reinanegra()
+    reinablanca = Reinablanca()
 
-reinanegra = Reinanegra()
-reinablanca = Reinablanca()
+    click = []
 
-click = []
+    fichamover = ""
+    turno = "blancas"
+    print("empiezan las blancas")
 
-fichamover = ""
-turno = "blancas"
-print("empiezan las blancas")
+    for p in range(1, 9):  # 1-8
+        peonegro.append(Peonegro(p))
+        peonblanco.append(Peonblanco(p))
 
-while True:
-    for evento in pygame.event.get():
-        if evento.type == QUIT:
-            pygame.quit()
-            sys.exit()
-        if evento.type == MOUSEBUTTONDOWN:
-            click.append(pygame.mouse.get_pos())
+    for c in (1, 2):
+        caballonegro.append(Caballonegro(ud7[c]))
+        caballoblanco.append(Caballoblanco(ud7[c]))
+        torrenegra.append(Torrenegra(pow(c, 3)))
+        torreblanca.append(Torreblanca(pow(c, 3)))
+        alfilnegro.append(Alfilnegro(c * 3))
+        alfilblanco.append(Alfilblanco(c * 3))
 
-    visor.blit(tablero, (0, 0))
+    while True:
+        for evento in pygame.event.get():
+            if evento.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if evento.type == MOUSEBUTTONDOWN:
+                click.append(pygame.mouse.get_pos())
 
-    if len(click) == 1:  #primer click
-        posraton = click[0]
-        casillax, casillay = sacasilla(posraton)
-        fichamover = sacapieza(casillax, casillay)
-        if (fichamover == 0) or (fichamover.color == 1 and turno == "negras") \
-                or (fichamover.color == 2 and turno == "blancas"):
-            fichamover = ""  #anula movimientos del otro turno
-        else:
-            posimov = fichamover.puedemovera()
-        if fichamover == "":
-            click = []
+        visor.blit(tablero, (0, 0))
 
-    if len(click) == 2:  #segundo click
-        posraton = click[1]
-        nuevacasillax, nuevacasillay = sacasilla(posraton)
-        if (nuevacasillax, nuevacasillay) in posimov:
-            if ocupadas[nuevacasillay][nuevacasillax] != 0:
-                comepieza(sacapieza(nuevacasillax, nuevacasillay))
-            fichamover.cambiasilla(nuevacasillax, nuevacasillay)
-            if fichamover == reynegro or fichamover == reyblanco:
-                if fichamover == reynegro:
-                    if enroke == 1 and (nuevacasillax, nuevacasillay) == (7, 1):
-                        torrenegra[2].cambiasilla(6, 1)
-                    if enroke == 2 and (nuevacasillax, nuevacasillay) == (3, 1):
-                        torrenegra[1].cambiasilla(4, 1)
-                if fichamover == reyblanco:
-                    if enroke == 1 and (nuevacasillax, nuevacasillay) == (7, 8):
-                        torreblanca[2].cambiasilla(6, 8)
-                    if enroke == 2 and (nuevacasillax, nuevacasillay) == (3, 8):
-                        torreblanca[1].cambiasilla(4, 8)
-                enroke = 0
-            if fichamover.color == 1:
-                turno = "negras"
+        if len(click) == 1:  #primer click
+            posraton = click[0]
+            casillax, casillay = sacasilla(posraton)
+            fichamover = sacapieza(casillax, casillay)
+            if (fichamover == 0) or (fichamover.color == 1 and turno == "negras") \
+                    or (fichamover.color == 2 and turno == "blancas"):
+                fichamover = ""  #anula movimientos del otro turno
             else:
-                turno = "blancas"
+                posimov = fichamover.puedemovera()
+            if fichamover == "":
+                click = []
 
-    #refrescos y representaciones
-    if reynegro.casx < 9 and reyblanco.casx < 9:
-        for d in range(1, 9):
-            visor.blit(peonblanco[d].foto, peonblanco[d].pos)
-            visor.blit(peonegro[d].foto, peonegro[d].pos)
+        if len(click) == 2:  #segundo click
+            posraton = click[1]
+            nuevacasillax, nuevacasillay = sacasilla(posraton)
+            if (nuevacasillax, nuevacasillay) in posimov:
+                if ocupadas[nuevacasillay][nuevacasillax] != 0:
+                    comepieza(sacapieza(nuevacasillax, nuevacasillay))
+                fichamover.cambiasilla(nuevacasillax, nuevacasillay)
+                if fichamover == reynegro or fichamover == reyblanco:
+                    if fichamover == reynegro:
+                        if enroke == 1 and (nuevacasillax, nuevacasillay) == (7, 1):
+                            torrenegra[2].cambiasilla(6, 1)
+                        if enroke == 2 and (nuevacasillax, nuevacasillay) == (3, 1):
+                            torrenegra[1].cambiasilla(4, 1)
+                    if fichamover == reyblanco:
+                        if enroke == 1 and (nuevacasillax, nuevacasillay) == (7, 8):
+                            torreblanca[2].cambiasilla(6, 8)
+                        if enroke == 2 and (nuevacasillax, nuevacasillay) == (3, 8):
+                            torreblanca[1].cambiasilla(4, 8)
+                    enroke = 0
+                if fichamover.color == 1:
+                    turno = "negras"
+                else:
+                    turno = "blancas"
 
-        for e in (1, 2):
-            visor.blit(torrenegra[e].foto, torrenegra[e].pos)
-            visor.blit(torreblanca[e].foto, torreblanca[e].pos)
+        #refrescos y representaciones
+        if reynegro.casx < 9 and reyblanco.casx < 9:
+            for d in range(1, 9):
+                visor.blit(peonblanco[d].foto, peonblanco[d].pos)
+                visor.blit(peonegro[d].foto, peonegro[d].pos)
 
-            visor.blit(alfilnegro[e].foto, alfilnegro[e].pos)
-            visor.blit(alfilblanco[e].foto, alfilblanco[e].pos)
+            for e in (1, 2):
+                visor.blit(torrenegra[e].foto, torrenegra[e].pos)
+                visor.blit(torreblanca[e].foto, torreblanca[e].pos)
 
-            visor.blit(caballoblanco[e].foto, caballoblanco[e].pos)
-            visor.blit(caballonegro[e].foto, caballonegro[e].pos)
+                visor.blit(alfilnegro[e].foto, alfilnegro[e].pos)
+                visor.blit(alfilblanco[e].foto, alfilblanco[e].pos)
 
-        visor.blit(reynegro.foto, reynegro.pos)
-        visor.blit(reyblanco.foto, reyblanco.pos)
+                visor.blit(caballoblanco[e].foto, caballoblanco[e].pos)
+                visor.blit(caballonegro[e].foto, caballonegro[e].pos)
 
-        visor.blit(reinanegra.foto, reinanegra.pos)
-        visor.blit(reinablanca.foto, reinablanca.pos)
+            visor.blit(reynegro.foto, reynegro.pos)
+            visor.blit(reyblanco.foto, reyblanco.pos)
 
-    if len(click) > 1:
-        click = []
-        fichamover = ""
-    if len(click) > 0:
-        for pos in posimov:
-            visor.blit(puntoazul, (casilla[pos[0]], casilla[pos[1]]))
+            visor.blit(reinanegra.foto, reinanegra.pos)
+            visor.blit(reinablanca.foto, reinablanca.pos)
 
-    if reynegro.casx > 8:
-        visor.blit(gblancas, (0, 0))
-    elif reyblanco.casx > 8:
-        visor.blit(gnegras, (0, 0))
+        if len(click) > 1:
+            click = []
+            fichamover = ""
+        if len(click) > 0:
+            for pos in posimov:
+                visor.blit(puntoazul, (casilla[pos[0]], casilla[pos[1]]))
 
-    pygame.display.update()
+        if reynegro.casx > 8:
+            visor.blit(gblancas, (0, 0))
+        elif reyblanco.casx > 8:
+            visor.blit(gnegras, (0, 0))
 
-    pygame.time.wait(20)  #limita a 50 fps para ahorrar cpu
+        pygame.display.update()
+
+        pygame.time.wait(20)  #limita a 50 fps para ahorrar cpu
