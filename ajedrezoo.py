@@ -285,6 +285,21 @@ def sacasilla(posraton):
     return x, y
 
 
+tablero = pygame.image.load('tablero-ajedrez.png')
+puntoazul = pygame.image.load('puntoazul.png')
+gblancas = pygame.image.load('gblancas.png')
+gnegras = pygame.image.load('gnegras.png')
+
+peonegro = [0]
+peonblanco = [0]
+caballonegro = [0]
+caballoblanco = [0]
+torrenegra = [0]
+torreblanca = [0]
+alfilnegro = [0]
+alfilblanco = [0]
+
+
 if __name__ == "__main__":
     pygame.init()
     visor = pygame.display.set_mode((560, 560))
@@ -292,19 +307,6 @@ if __name__ == "__main__":
 
     ud7 = [0, 2, 7]
 
-    tablero = pygame.image.load('tablero-ajedrez.png')
-    puntoazul = pygame.image.load('puntoazul.png')
-    gblancas = pygame.image.load('gblancas.png')
-    gnegras = pygame.image.load('gnegras.png')
-
-    peonegro = [0]
-    peonblanco = [0]
-    caballonegro = [0]
-    caballoblanco = [0]
-    torrenegra = [0]
-    torreblanca = [0]
-    alfilnegro = [0]
-    alfilblanco = [0]
 
     for p in range(1, 9):  #1-8
         peonegro.append(Peonegro(p))
